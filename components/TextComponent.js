@@ -14,5 +14,6 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontSize: 17,
     paddingTop: 10,
+    fontFamily: "Roboto-Medium",
   },
 });

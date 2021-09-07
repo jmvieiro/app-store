@@ -29,5 +29,6 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingTop: 5,
     textAlign: "center",
+    fontFamily: "Roboto-Bold",
   },
 });

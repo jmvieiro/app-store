@@ -8,6 +8,14 @@ import { ShopProvider } from "./context/ShopContext";
 import { useFonts } from "expo-font";
 
 export default function App() {
+  const [loaded] = useFonts({
+    "Roboto-Bold": require("./assets/fonts/Roboto/Roboto-Bold.ttf"),
+    "Roboto-Black": require("./assets/fonts/Roboto/Roboto-Black.ttf"),
+    "Roboto-Light": require("./assets/fonts/Roboto/Roboto-Light.ttf"),
+    "Roboto-Medium": require("./assets/fonts/Roboto/Roboto-Medium.ttf"),
+  });
+  if (!loaded) return <AppLoading />;
+
   return (
     <ShopProvider>
       <CartProvider>
