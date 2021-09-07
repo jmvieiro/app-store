@@ -4,6 +4,7 @@ import { Text, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import COLORS from "../constants/colors";
 import { CartContext } from "../context/CartContext";
+import ROUTES from "../constants/routes";
 import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -14,7 +15,7 @@ export const CartWidget = () => {
   return (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("Checkout");
+        navigation.navigate(ROUTES.CHECKOUT);
       }}
     >
       <View style={{ marginRight: 10 }}>

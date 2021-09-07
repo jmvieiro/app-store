@@ -10,24 +10,20 @@ export const CarouselComponent = ({ navigation }) => {
   const DELAY = 7000;
   const carouselItems = [
     {
-      title: "Item 1",
-      text: "Text 1",
+      title: "Megaofertas",
+      text: "Aprovechá los descuentos en indumentarias",
     },
     {
-      title: "Item 2",
-      text: "Text 2",
+      title: "Fidelidad",
+      text: "Bonificaciones para clientes frecuentes",
     },
     {
-      title: "Item 3",
-      text: "Text 3",
+      title: "Recomendanos",
+      text: "¡Y participá por increíbles premios!",
     },
     {
-      title: "Item 4",
-      text: "Text 4",
-    },
-    {
-      title: "Item 5",
-      text: "Text 5",
+      title: "Soporte post-venta",
+      text: "Para que disfrutes tu experiencia de compra",
     },
   ];
 

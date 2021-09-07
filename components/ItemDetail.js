@@ -5,6 +5,7 @@ import { ButtonComponent } from "./ButtonComponent";
 import COLORS from "../constants/colors";
 import { CartContext } from "../context/CartContext";
 import { ItemCounter } from "./ItemCounter";
+import ROUTES from "../constants/routes";
 import { TextComponent } from "./TextComponent";
 import accounting from "accounting";
 
@@ -77,7 +78,7 @@ export const ItemDetail = ({ product, navigation }) => {
                 title={`Seguir comprando`}
                 style={{ ...styles.button, ...styles.buttonContinue }}
                 handleClick={() => {
-                  navigation.navigate("Home");
+                  navigation.navigate(ROUTES.PRODUCTS);
                 }}
               />
             </View>
@@ -86,7 +87,7 @@ export const ItemDetail = ({ product, navigation }) => {
                 style={{ ...styles.button }}
                 title={`Checkout`}
                 handleClick={() => {
-                  navigation.navigate("Checkout");
+                  navigation.navigate(ROUTES.CHECKOUT);
                 }}
               />
             </View>

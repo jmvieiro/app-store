@@ -7,6 +7,7 @@ import { Container } from "../components/Container";
 import { List } from "../components/List/List";
 import { Loader } from "../components/Loader";
 import { ModalForm } from "../components/ModalForm";
+import ROUTES from "../constants/routes";
 import { Screen } from "./Screen";
 import { TextComponent } from "../components/TextComponent";
 import { View } from "react-native";
@@ -98,7 +99,7 @@ export const Checkout = ({ navigation }) => {
               <ButtonComponent
                 title={`Ir de compras`}
                 handleClick={() => {
-                  navigation.navigate("Home");
+                  navigation.navigate(ROUTES.PRODUCTS);
                 }}
                 style={{
                   backgroundColor: COLORS.success,
