@@ -12,7 +12,6 @@ import accounting from "accounting";
 export const ItemDetail = ({ product, navigation }) => {
   const { cart, addItem } = useContext(CartContext);
   const [confirm, setConfirm] = useState(false);
-  let aux = cart.find((c) => c.product.id === product.id);
   function onAdd(c) {
     setConfirm(true);
     addItem(product, c, false);

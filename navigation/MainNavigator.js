@@ -8,26 +8,26 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 const Tab = createBottomTabNavigator();
 
+const options = ({ route }) => ({
+  headerShown: false,
+  tabBarIcon: ({ focused, color, size }) => {
+    let iconName;
+
+    if (route.name === "Main") {
+      iconName = focused ? "appstore1" : "appstore-o";
+    } else if (route.name === "Contact") {
+      iconName = focused ? "infocirlce" : "infocirlceo";
+    }
+    return <AntDesign name={iconName} size={size} color={color} />;
+  },
+  tabBarActiveTintColor: COLORS.background,
+  tabBarInactiveTintColor: "gray",
+});
+
 export const MainNavigator = () => {
   return (
     <NavigationContainer initialRouteName="ProductsNavigator">
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          headerShown: false,
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-
-            if (route.name === "Main") {
-              iconName = focused ? "appstore1" : "appstore-o";
-            } else if (route.name === "Contact") {
-              iconName = focused ? "infocirlce" : "infocirlceo";
-            }
-            return <AntDesign name={iconName} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: COLORS.background,
-          tabBarInactiveTintColor: "gray",
-        })}
-      >
+      <Tab.Navigator screenOptions={options}>
         <Tab.Screen
           name="Main"
           component={ProductsNavigator}
