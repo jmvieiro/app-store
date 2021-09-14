@@ -8,6 +8,7 @@ import { ItemCounter } from "./ItemCounter";
 import ROUTES from "../constants/routes";
 import { TextComponent } from "./TextComponent";
 import accounting from "accounting";
+import { selectCategory } from "../store/actions/category.actions";
 import { useDispatch } from "react-redux";
 
 export const ItemDetail = ({ product, navigation }) => {

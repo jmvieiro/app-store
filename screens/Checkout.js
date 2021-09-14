@@ -12,6 +12,7 @@ import { Screen } from "./Screen";
 import { TextComponent } from "../components/TextComponent";
 import { View } from "react-native";
 import accounting from "accounting";
+import { selectCategory } from "../store/actions/category.actions";
 import { useDispatch } from "react-redux";
 
 export const Checkout = ({ navigation }) => {
