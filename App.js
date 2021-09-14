@@ -3,8 +3,9 @@ import { StyleSheet, Text, View } from "react-native";
 import AppLoading from "expo-app-loading";
 import { CartProvider } from "./context/CartContext";
 import { MainNavigator } from "./navigation/MainNavigator";
+import { Provider } from "react-redux";
 import React from "react";
-import { ShopProvider } from "./context/ShopContext";
+import store from "./store";
 import { useFonts } from "expo-font";
 
 export default function App() {
@@ -17,11 +18,11 @@ export default function App() {
   if (!loaded) return <AppLoading />;
 
   return (
-    <ShopProvider>
+    <Provider store={store}>
       <CartProvider>
         <MainNavigator />
       </CartProvider>
-    </ShopProvider>
+    </Provider>
   );
 }
 

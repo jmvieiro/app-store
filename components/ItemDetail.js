@@ -8,8 +8,10 @@ import { ItemCounter } from "./ItemCounter";
 import ROUTES from "../constants/routes";
 import { TextComponent } from "./TextComponent";
 import accounting from "accounting";
+import { useDispatch } from "react-redux";
 
 export const ItemDetail = ({ product, navigation }) => {
+  const dispatch = useDispatch();
   const { cart, addItem } = useContext(CartContext);
   const [confirm, setConfirm] = useState(false);
   function onAdd(c) {
@@ -77,6 +79,7 @@ export const ItemDetail = ({ product, navigation }) => {
                 title={`Seguir comprando`}
                 style={{ ...styles.button, ...styles.buttonContinue }}
                 handleClick={() => {
+                  dispatch(selectCategory({}));
                   navigation.navigate(ROUTES.PRODUCTS);
                 }}
               />

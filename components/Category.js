@@ -6,15 +6,19 @@ import { StyleSheet } from "react-native";
 import { TextComponent } from "./TextComponent";
 import { TouchableOpacity } from "react-native";
 import { View } from "react-native";
+import { selectCategory } from "../store/actions/category.actions";
+import { useDispatch } from "react-redux";
 
 export const Category = ({ item, navigation }) => {
+  const dispatch = useDispatch();
   return (
     <View style={styles.container}>
       <View style={[styles.gridItem, { backgroundColor: COLORS.header }]}>
         <TouchableOpacity
           style={{ flex: 1 }}
           onPress={() => {
-            navigation.navigate(ROUTES.PRODUCTS, { id: item.id, name: item.name });
+            dispatch(selectCategory(item));
+            navigation.navigate(ROUTES.PRODUCTS);
           }}
         >
           <TextComponent style={{ color: COLORS.background }}>
@@ -30,9 +34,6 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 6,
     margin: 35,
-    // borderWidth: 1,
-    // borderColor: "red",
-    // borderStyle: "solid",
     height: 80,
     alignItems: "center",
   },

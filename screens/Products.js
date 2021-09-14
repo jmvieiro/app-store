@@ -1,36 +1,27 @@
-import React, { useContext, useEffect, useState } from "react";
-import { getCategoryById, getProductsByCategory } from "../firebase/client";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Container } from "../components/Container";
 import { List } from "../components/List/List";
 import { Loader } from "../components/Loader";
 import { Screen } from "./Screen";
-import { ShopContext } from "../context/ShopContext";
 import { TextComponent } from "../components/TextComponent";
+import { filterProducts } from "../store/actions/product.actions";
 
-export const Products = ({ route, navigation }) => {
-  const { categories, products } = useContext(ShopContext);
-  const [filterProducts, setFilterProducts] = useState([]);
-  const [category, setCategory] = useState(null);
+export const Products = ({ navigation }) => {
+  const filteredProducts = useSelector((state) => state.products.filtered);
+  const selectedCategory = useSelector((state) => state.categories.selected);
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-  const { id, name } = route.params;
 
   useEffect(() => {
     setLoading(true);
-    const waitForData = async (id) => {
-      let cat = null;
-      if (id) {
-        cat = categories.find((c) => c.id === id);
-        if (!cat) cat = await getCategoryById(id);
-        let prods = products.filter((p) => p.category === id);
-        if (prods.length !== 0) setFilterProducts(prods);
-        else setFilterProducts(await getProductsByCategory(id));
-      } else setFilterProducts(products);
-      setCategory(cat);
+    const waitForData = async () => {
+      dispatch(filterProducts(selectedCategory));
       setLoading(false);
     };
-    waitForData(id);
-  }, [id, categories, products]);
+    waitForData();
+  }, [selectedCategory]);
 
   return (
     <Screen>
@@ -38,13 +29,14 @@ export const Products = ({ route, navigation }) => {
         <Loader />
       ) : (
         <Container>
-          {!filterProducts || filterProducts.length === 0 ? (
+          <TextComponent style={{ marginBottom: 30 }}>
+            {selectedCategory.name}
+          </TextComponent>
+
+          {!filteredProducts || filteredProducts.length === 0 ? (
             <TextComponent>No hay productos para mostrar.</TextComponent>
           ) : (
-            <>
-              <TextComponent style={{marginBottom: 30}}>{name}</TextComponent>
-              <List data={filterProducts} navigation={navigation} />
-            </>
+            <List data={filteredProducts} navigation={navigation} />
           )}
         </Container>
       )}

@@ -12,8 +12,10 @@ import { Screen } from "./Screen";
 import { TextComponent } from "../components/TextComponent";
 import { View } from "react-native";
 import accounting from "accounting";
+import { useDispatch } from "react-redux";
 
 export const Checkout = ({ navigation }) => {
+  const dispatch = useDispatch();
   const { clear, cart, cartTotal, cartSize } = useContext(CartContext);
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
@@ -99,6 +101,7 @@ export const Checkout = ({ navigation }) => {
               <ButtonComponent
                 title={`Ir de compras`}
                 handleClick={() => {
+                  dispatch(selectCategory({}));
                   navigation.navigate(ROUTES.PRODUCTS);
                 }}
                 style={{

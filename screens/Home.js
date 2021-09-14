@@ -1,22 +1,22 @@
 import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import COLORS from "../constants/colors";
 import { CarouselComponent } from "../components/CarouselComponent";
 import { Category } from "../components/Category";
 import { Container } from "../components/Container";
 import { Loader } from "../components/Loader";
-import { ShopContext } from "../context/ShopContext";
 import { TextComponent } from "../components/TextComponent";
 
 export const Home = ({ navigation }) => {
+  const categories = useSelector((state) => state.categories.list);
   const [loading, setLoading] = useState(true);
   const [_categories, setCategories] = useState(true);
-  const { categories } = useContext(ShopContext);
   useEffect(() => {
     setLoading(true);
     const waitForData = async () => {
-      setCategories([{ name: "Todos los productos", id: null }, ...categories]);
+      setCategories(categories);
       setLoading(false);
     };
     waitForData();
@@ -56,7 +56,7 @@ export const Home = ({ navigation }) => {
                 style={{
                   alignSelf: "flex-start",
                   marginTop: 30,
-                  marginLeft: 35
+                  marginLeft: 35,
                 }}
               >
                 <TextComponent

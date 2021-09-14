@@ -6,8 +6,11 @@ import { TextComponent } from "../TextComponent";
 import { TouchableOpacity } from "react-native";
 import { View } from "react-native";
 import accounting from "accounting";
+import { selectProduct } from "../../store/actions/product.actions";
+import { useDispatch } from "react-redux";
 
 export const ListItem = ({ item, navigation }) => {
+  const dispatch = useDispatch();
   return (
     <View
       style={{
@@ -18,7 +21,8 @@ export const ListItem = ({ item, navigation }) => {
         <TouchableOpacity
           style={{ width: "100%" }}
           onPress={() => {
-            navigation.navigate(ROUTES.DETAIL, { id: item.id });
+            dispatch(selectProduct(item));
+            navigation.navigate(ROUTES.DETAIL);
           }}
         >
           <View

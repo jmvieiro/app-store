@@ -1,17 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { ShopContext } from "./ShopContext";
 import firebase from "firebase/app";
 import { showAlert } from "../utils/helper";
 import { updateStock } from "../firebase/client";
+import { useSelector } from "react-redux";
 
 export const CartContext = React.createContext();
 
 export const CartProvider = ({ children }) => {
+  const PRODUCTS = useSelector((state) => state.products.list);
   const [cart, setCart] = useState([]);
   const [cartSize, setCartSize] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
-  const { products, setProducts } = useContext(ShopContext);
 
   function getFrom(id) {
     return cart.find((p) => p.product.id === id);
@@ -100,11 +100,11 @@ export const CartProvider = ({ children }) => {
     };
     return updateStock(order, clear).then((response) => {
       if (response.res === "success") {
-        products.forEach((item) => {
+        PRODUCTS.forEach((item) => {
           let aux = order.detail.find((i) => i.idProduct === item.id);
           if (aux) item.stock -= aux.qty;
         });
-        setProducts(products);
+        setProducts(PRODUCTS);
       }
       return response;
     });

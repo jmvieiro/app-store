@@ -1,39 +1,21 @@
-import React, { useEffect, useState } from "react";
-
 import { Container } from "../components/Container";
 import { ItemDetail } from "../components/ItemDetail";
-import { Loader } from "../components/Loader";
+import React from "react";
 import { Screen } from "./Screen";
 import { TextComponent } from "../components/TextComponent";
-import { getProductById } from "../firebase/client";
+import { useSelector } from "react-redux";
 
-export const Detail = ({ route, navigation }) => {
-  const { id } = route.params;
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const waitForData = async (id) => {
-      if (id) setProduct(await getProductById(id));
-      else setProduct(null);
-      setLoading(false);
-    };
-    waitForData(id);
-  }, [id]);
-
+export const Detail = ({ navigation }) => {
+  const selectedProduct = useSelector((state) => state.products.selected);
   return (
     <Screen>
-      {loading ? (
-        <Loader />
-      ) : (
-        <Container>
-          {!product ? (
-            <TextComponent>Producto no encontrado.</TextComponent>
-          ) : (
-            <ItemDetail product={product} navigation={navigation} />
-          )}
-        </Container>
-      )}
+      <Container>
+        {!selectedProduct ? (
+          <TextComponent>Producto no encontrado.</TextComponent>
+        ) : (
+          <ItemDetail product={selectedProduct} navigation={navigation} />
+        )}
+      </Container>
     </Screen>
   );
 };
