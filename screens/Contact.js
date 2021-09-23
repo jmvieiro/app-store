@@ -1,53 +1,55 @@
-import { Image, StyleSheet, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import {
+  Image,
+  Linking,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import { APP_NAME } from "../utils/const";
 import COLORS from "../constants/colors";
 import { Container } from "../components/Container";
-import { Loader } from "../components/Loader";
+import React from "react";
 import { Screen } from "./Screen";
 import { TextComponent } from "../components/TextComponent";
 
-export const Contact = ({ navigation }) => {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true);
-    const waitForData = async () => {
-      setLoading(false);
-    };
-    waitForData();
-  }, []);
+export const Contact = () => {
   return (
     <Screen>
-      {loading ? (
-        <Loader />
-      ) : (
-        <Container style={{ flex: 0 }}>
-          <View
+      <Container style={{ flex: 0 }}>
+        <View
+          style={{
+            backgroundColor: COLORS.header,
+            alignItems: "center",
+            borderRadius: 6,
+            padding: 50,
+          }}
+        >
+          <Image
             style={{
-              backgroundColor: COLORS.header,
-              alignItems: "center",
-              borderRadius: 6,
-              padding: 50,
+              height: 60,
+              width: 100,
+              resizeMode: "contain",
             }}
+            source={require("../assets/images/logo.png")}
+          />
+          <TextComponent style={styles.text}>
+            Gracias por visitarnos.
+          </TextComponent>
+          <TextComponent style={styles.text}>Coded with ❤</TextComponent>
+          <TextComponent style={styles.text}>{APP_NAME}</TextComponent>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              Linking.openURL("http://github.com/jmvieiro/app-store")
+            }
           >
-            <Image
-              style={{
-                height: 60,
-                width: 100,
-                resizeMode: "contain",
-              }}
-              source={require("../assets/images/logo.png")}
-            />
-            <TextComponent style={styles.text}>
-              Gracias por visitarnos.
+            <TextComponent style={{ ...styles.text, ...{ fontSize: 25 } }}>
+              GitHub
             </TextComponent>
-            <TextComponent style={styles.text}>Coded with ❤.</TextComponent>
-            <TextComponent style={styles.text}>{APP_NAME}</TextComponent>
-          </View>
-        </Container>
-      )}
+          </TouchableOpacity>
+        </View>
+      </Container>
     </Screen>
   );
 };
@@ -55,6 +57,10 @@ export const Contact = ({ navigation }) => {
 const styles = StyleSheet.create({
   text: {
     color: COLORS.background,
+    marginTop: 10,
+  },
+  button: {
+    padding: 0,
     marginTop: 10,
   },
 });

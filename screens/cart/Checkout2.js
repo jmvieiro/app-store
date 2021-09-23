@@ -1,18 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { ButtonComponent } from "../components/ButtonComponent";
-import COLORS from "../constants/colors";
-import { CartContext } from "../context/CartContext";
-import { Container } from "../components/Container";
-import { List } from "../components/List/List";
-import { Loader } from "../components/Loader";
-import { ModalForm } from "../components/ModalForm";
-import ROUTES from "../constants/routes";
-import { Screen } from "./Screen";
-import { TextComponent } from "../components/TextComponent";
+import { ButtonComponent } from "../../components/ButtonComponent";
+import COLORS from "../../constants/colors";
+import { CartContext } from "../../context/CartContext";
+import { Container } from "../../components/Container";
+import { List } from "../../components/List/List";
+import { Loader } from "../../components/Loader";
+import { ModalForm } from "../../components/ModalForm";
+import ROUTES from "../../constants/routes";
+import { Screen } from "../Screen";
+import { TextComponent } from "../../components/TextComponent";
 import { View } from "react-native";
 import accounting from "accounting";
-import { selectCategory } from "../store/actions/category.actions";
+import { selectCategory } from "../../store/actions/category.actions";
 import { useDispatch } from "react-redux";
 
 export const Checkout = ({ navigation }) => {
@@ -27,7 +27,7 @@ export const Checkout = ({ navigation }) => {
     }, 500);
   });
 
-  const handleModalOpen = (id) => {
+  const handleModalOpen = () => {
     setModalVisible(true);
   };
 

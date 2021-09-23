@@ -43,11 +43,11 @@ export const CartProvider = ({ children }) => {
             aux[i].product.stock
           ) {
             aux[i].qty = parseInt(aux[i].qty) + parseInt(qty);
-            showAlert(
-              `😎 El producto ya estaba en el carrito. La cantidad del mismo ha sido actualizada.`,
-              "",
-              "info"
-            );
+            // showAlert(
+            //   `😎 El producto ya estaba en el carrito. La cantidad del mismo ha sido actualizada.`,
+            //   "",
+            //   "info"
+            // );
           } else {
             showAlert(
               `😱 El stock disponible es ${

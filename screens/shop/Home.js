@@ -1,13 +1,13 @@
 import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
-import COLORS from "../constants/colors";
-import { CarouselComponent } from "../components/CarouselComponent";
-import { Category } from "../components/Category";
-import { Container } from "../components/Container";
-import { Loader } from "../components/Loader";
-import { TextComponent } from "../components/TextComponent";
+import COLORS from "../../constants/colors";
+import { CarouselComponent } from "../../components/CarouselComponent";
+import { Category } from "../../components/Category";
+import { Container } from "../../components/Container";
+import { Loader } from "../../components/Loader";
+import { TextComponent } from "../../components/TextComponent";
+import { useSelector } from "react-redux";
 
 export const Home = ({ navigation }) => {
   const categories = useSelector((state) => state.categories.list);

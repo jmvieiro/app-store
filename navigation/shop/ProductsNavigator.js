@@ -1,13 +1,11 @@
-import COLORS from "../constants/colors";
-import { CartWidget } from "../components/CartWidget";
-import { Checkout } from "../screens/Checkout";
-import { Detail } from "../screens/Detail";
-import { Home } from "../screens/Home";
-import { LogoTitle } from "../components/LogoTitle";
-import { Products } from "../screens/Products";
+import COLORS from "../../constants/colors";
+import { CartWidget } from "../../components/CartWidget";
+import { Detail } from "../../screens/shop/Detail";
+import { Home } from "../../screens/shop/Home";
+import { Products } from "../../screens/shop/Products";
 import React from "react";
 import { StyleSheet } from "react-native";
-import { TextComponent } from "../components/TextComponent";
+import { TextComponent } from "../../components/TextComponent";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
@@ -29,9 +27,9 @@ export const ProductsNavigator = () => {
         name="Home"
         component={Home}
         options={{
-          headerTitle: () => <TextComponent></TextComponent>,
-          headerRight: () => <CartWidget />,
-          headerLeft: () => <LogoTitle />,
+          headerTitle: () => (
+            <TextComponent style={styles.title}>Bienvenidos</TextComponent>
+          ),
         }}
       />
       <Stack.Screen
@@ -56,16 +54,6 @@ export const ProductsNavigator = () => {
           ),
           headerBackTitle: "Productos",
           headerRight: () => <CartWidget />,
-        }}
-      />
-      <Stack.Screen
-        name="Checkout"
-        component={Checkout}
-        options={{
-          headerTitle: () => (
-            <TextComponent style={styles.title}>Checkout</TextComponent>
-          ),
-          headerBackTitle: "Volver",
         }}
       />
     </Stack.Navigator>

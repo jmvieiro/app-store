@@ -1,8 +1,8 @@
-import { Container } from "../components/Container";
-import { ItemDetail } from "../components/ItemDetail";
+import { Container } from "../../components/Container";
+import { ItemDetail } from "../../components/ItemDetail";
 import React from "react";
-import { Screen } from "./Screen";
-import { TextComponent } from "../components/TextComponent";
+import { Screen } from "../Screen";
+import { TextComponent } from "../../components/TextComponent";
 import { useSelector } from "react-redux";
 
 export const Detail = ({ navigation }) => {

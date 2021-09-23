@@ -26,7 +26,7 @@ export const PRODUCTS = [
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     price: 3500,
-    stock: 0,
+    stock: 20,
     img: "https://renzauniformes.com/wp-content/uploads/2021/03/garys-704800-pantalon-mujer-bols--americano-albero.jpg",
   },
   {
@@ -36,7 +36,7 @@ export const PRODUCTS = [
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     price: 6000,
-    stock: 0,
+    stock: 10,
     img: "https://www.guantexindustrial.com.ar/2324-large_default/camisa-oxford-celeste-talle-48.jpg",
   },
   {

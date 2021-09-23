@@ -8,6 +8,7 @@ import { ItemCounter } from "./ItemCounter";
 import ROUTES from "../constants/routes";
 import { TextComponent } from "./TextComponent";
 import accounting from "accounting";
+import { addProduct_ } from "../store/actions/cart.actions";
 import { selectCategory } from "../store/actions/category.actions";
 import { useDispatch } from "react-redux";
 
@@ -16,6 +17,7 @@ export const ItemDetail = ({ product, navigation }) => {
   const { cart, addItem } = useContext(CartContext);
   const [confirm, setConfirm] = useState(false);
   function onAdd(c) {
+    dispatch(addProduct_(product, c, false));
     setConfirm(true);
     addItem(product, c, false);
   }

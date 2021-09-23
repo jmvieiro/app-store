@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Container } from "../components/Container";
-import { List } from "../components/List/List";
-import { Loader } from "../components/Loader";
-import { Screen } from "./Screen";
-import { TextComponent } from "../components/TextComponent";
-import { filterProducts } from "../store/actions/product.actions";
+import { Container } from "../../components/Container";
+import { List } from "../../components/List/List";
+import { Loader } from "../../components/Loader";
+import { Screen } from "../Screen";
+import { TextComponent } from "../../components/TextComponent";
+import { filterProducts } from "../../store/actions/product.actions";
 
 export const Products = ({ navigation }) => {
   const filteredProducts = useSelector((state) => state.products.filtered);

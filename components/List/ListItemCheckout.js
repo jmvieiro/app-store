@@ -7,7 +7,7 @@ import { View } from "react-native";
 import accounting from "accounting";
 
 export const ListItemCheckout = React.memo(
-  ({ item }) => {
+  ({ item }) => {  
     let remainingStock = item.product.stock - item.qty;
     return (
       <View

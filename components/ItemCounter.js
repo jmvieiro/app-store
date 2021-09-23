@@ -5,6 +5,8 @@ import { ButtonComponent } from "./ButtonComponent";
 import COLORS from "../constants/colors";
 import { CartContext } from "../context/CartContext";
 import { Input } from "./Input";
+import { addProduct_ } from "../store/actions/cart.actions";
+import { useDispatch } from "react-redux";
 
 export const ItemCounter = ({
   product,
@@ -12,7 +14,10 @@ export const ItemCounter = ({
   onAdd = null,
   checkout = false,
 }) => {
-  const [counter, setCounter] = useState(initial);
+  console.log("initial", initial);
+
+  const dispatch = useDispatch();
+  const [counter, setCounter] = useState(initial.toString());
   const { cart, removeItem, addItem } = useContext(CartContext);
   let productInCart = cart.find((e) => e.product.id === product.id);
   let remainingStock = productInCart
@@ -24,31 +29,31 @@ export const ItemCounter = ({
   const sumar = () => {
     if (checkout) {
       if (counter < product.stock) {
+        dispatch(addProduct_(product, counter + 1, true));
         addItem(product, counter + 1, true);
         setCounter(counter + 1);
       }
-    } else {
-      if (counter < remainingStock) setCounter(counter + 1);
-    }
+    } else if (counter < remainingStock) setCounter(counter + 1);
   };
   const restar = () => {
     if (checkout) {
       if (counter > 1) {
+        dispatch(addProduct_(product, counter - 1, true));
         addItem(product, counter - 1, true);
         setCounter(counter - 1);
       }
-    } else {
-      if (counter > 1) setCounter(counter - 1);
-    }
+    } else if (counter > 1) setCounter(counter - 1);
   };
 
   const manualChange = (e) => {
     let value = parseInt(e);
     if (checkout) {
       if (value > 1 && value < remainingStock) {
+        dispatch(addProduct_(product, value, true));
         addItem(product, value, true);
         setCounter(value);
       } else {
+        dispatch(addProduct_(product, product.stock, true));
         addItem(product, product.stock, true);
         setCounter(product.stock);
       }

@@ -17,7 +17,7 @@ export const ModalForm = ({ modalVisible, handleModalClose }) => {
   const confirmarCarrito = () => {
     if (!form.name) {
       showAlert(
-        "😓 Ingresá tu nombre para completar el checkout.",
+        "Ingresá tu nombre para completar el checkout.",
         "",
         "error"
       );
@@ -25,7 +25,7 @@ export const ModalForm = ({ modalVisible, handleModalClose }) => {
     }
     if (!form.email.includes("@")) {
       showAlert(
-        "😓 Ingresá un email válido para completar el checkout.",
+        "Ingresá un email válido para completar el checkout.",
         "",
         "error"
       );
@@ -33,19 +33,20 @@ export const ModalForm = ({ modalVisible, handleModalClose }) => {
     }
     if (!form.phone) {
       showAlert(
-        "😓 Ingresá un teléfono para completar el checkout.",
+        "Ingresá un teléfono para completar el checkout.",
         "",
         "error"
       );
       return;
     }
-
+  
+    dispatch(confirmCart_(cart, form.email, form.name, form.phone))
     const waitForData = async () => {
       const res = await createOrder(form.email, form.name, form.phone);
       if (res.res !== "success")
         showAlert(res.desc[0], res.desc[1], res.desc[2]);
     };
-    waitForData();
+    //waitForData();
   };
   return (
     <Modal animationType="slide" visible={modalVisible} transparent>

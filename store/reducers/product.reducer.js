@@ -11,12 +11,12 @@ const initialState = {
 const ProductReducer = (state = initialState, action) => {
   switch (action.type) {
     case SELECT_PRODUCT:
-      return { ...state, selected: action.payload };
+      return { ...state, selected: action.product };
     case FILTER_PRODUCTS:
       return {
         ...state,
-        filtered: action.payload.id
-          ? state.list.filter((p) => p.category == action.payload.id)
+        filtered: action.categoryId
+          ? state.list.filter((p) => p.category == action.categoryId)
           : state.list,
       };
     default:

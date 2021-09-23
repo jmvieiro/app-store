@@ -1,44 +1,26 @@
-import { AntDesign } from "@expo/vector-icons";
+import { AuthNavigator } from "./AuthNavigator";
 import COLORS from "../constants/colors";
-import { Contact } from "../screens/Contact";
+import { Loader } from "../components/Loader";
 import { NavigationContainer } from "@react-navigation/native";
-import { ProductsNavigator } from "./ProductsNavigator";
 import React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
-const Tab = createBottomTabNavigator();
-
-const options = ({ route }) => ({
-  headerShown: false,
-  tabBarIcon: ({ focused, color, size }) => {
-    let iconName;
-
-    if (route.name === "Main") {
-      iconName = focused ? "appstore1" : "appstore-o";
-    } else if (route.name === "Contact") {
-      iconName = focused ? "infocirlce" : "infocirlceo";
-    }
-    return <AntDesign name={iconName} size={size} color={color} />;
-  },
-  tabBarActiveTintColor: COLORS.background,
-  tabBarInactiveTintColor: "gray",
-});
+import { TabNavigator } from "./TabNavigator";
+import { useSelector } from "react-redux";
 
 export const MainNavigator = () => {
+  const userId = useSelector((state) => state.auth.userId);
+  const status = useSelector((state) => state.auth.status);
+
   return (
-    <NavigationContainer initialRouteName="ProductsNavigator">
-      <Tab.Navigator screenOptions={options}>
-        <Tab.Screen
-          name="Main"
-          component={ProductsNavigator}
-          options={{ title: "Productos" }}
-        />
-        <Tab.Screen
-          name="Contact"
-          component={Contact}
-          options={{ title: "Contacto" }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <>
+      <NavigationContainer>
+        {status === "loading" ? (
+          <Loader style={{ backgroundColor: COLORS.background }} />
+        ) : userId ? (
+          <TabNavigator />
+        ) : (
+          <AuthNavigator />
+        )}
+      </NavigationContainer>
+    </>
   );
 };
