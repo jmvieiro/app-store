@@ -1,15 +1,22 @@
-import { FILTER_PRODUCTS, SELECT_PRODUCT } from "../actions/product.actions";
-
-import { PRODUCTS } from "../../data/products";
+import {
+  FILTER_PRODUCTS,
+  GET_PRODUCTS,
+  GET_PRODUCTS_BY_CATEGORY,
+  SELECT_PRODUCT,
+  _getProducts,
+} from "../actions/product.actions";
 
 const initialState = {
-  list: PRODUCTS,
+  list: [],
   filtered: [],
   selected: {},
+  status: "inactive",
 };
 
 const ProductReducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET_PRODUCTS:
+      return { ...state, list: action.list, status: action.status };
     case SELECT_PRODUCT:
       return { ...state, selected: action.product };
     case FILTER_PRODUCTS:
@@ -18,6 +25,11 @@ const ProductReducer = (state = initialState, action) => {
         filtered: action.categoryId
           ? state.list.filter((p) => p.category == action.categoryId)
           : state.list,
+      };
+    case GET_PRODUCTS_BY_CATEGORY:
+      return {
+        ...state,
+        filtered: action.filtered,
       };
     default:
       return state;

@@ -48,8 +48,6 @@ export const InputForm = (props) => {
     if (props.email && !emailRegex.test(text.toLowerCase())) isValid = false;
     if (props.minLength && text.length < props.minLength) isValid = false;
     if (props.maxLength && text.length > props.maxLength) isValid = false;
-    if (props.password && props.password2 && props.password !== props.password2)
-      isValid = false;
     inputDispatch({
       type: INPUT_CHANGE,
       value: text,

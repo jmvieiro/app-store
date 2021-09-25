@@ -1,5 +1,4 @@
 import COLORS from "../../constants/colors";
-import { CartWidget } from "../../components/CartWidget";
 import { Detail } from "../../screens/shop/Detail";
 import { Home } from "../../screens/shop/Home";
 import { Products } from "../../screens/shop/Products";
@@ -7,6 +6,8 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { TextComponent } from "../../components/TextComponent";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+//import { CartWidget } from "../../components/CartWidget";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,8 +28,9 @@ export const ProductsNavigator = () => {
         name="Home"
         component={Home}
         options={{
-          headerTitle: () => (
-            <TextComponent style={styles.title}>Bienvenidos</TextComponent>
+          headerTitle: () => <TextComponent></TextComponent>,
+          headerRight: () => (
+            <TextComponent style={styles.title}>Bienvenido</TextComponent>
           ),
         }}
       />
@@ -36,24 +38,26 @@ export const ProductsNavigator = () => {
         name="Products"
         component={Products}
         options={{
-          headerTitle: () => (
+          headerTitle: () => <TextComponent></TextComponent>,
+          headerRight: () => (
             <TextComponent style={styles.title}>Productos</TextComponent>
           ),
           headerBackTitle: "Inicio",
-          headerRight: () => <CartWidget />,
+          // headerRight: () => <CartWidget />,
         }}
       />
       <Stack.Screen
         name="Detail"
         component={Detail}
         options={{
-          headerTitle: () => (
+          headerTitle: () => <TextComponent></TextComponent>,
+          headerRight: () => (
             <TextComponent style={styles.title}>
               Detalle del producto
             </TextComponent>
           ),
           headerBackTitle: "Productos",
-          headerRight: () => <CartWidget />,
+          // headerRight: () => <CartWidget />,
         }}
       />
     </Stack.Navigator>

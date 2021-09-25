@@ -15,9 +15,13 @@ const initialState = {
 };
 
 const sumTotal = (list) =>
-  list.map((item) => item.qty * item.product.price).reduce((a, b) => a + b, 0);
+  list
+    .map((item) => parseInt(item.qty) * item.product.price)
+    .reduce((a, b) => a + b, 0);
 const cartSize = (list) =>
-  list.map((item) => item.qty).reduce((a, b) => a + b, 0);
+  list
+    .map((item) => parseInt(item.qty))
+    .reduce((a, b) => parseInt(a) + parseInt(b), 0);
 
 const CartReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -28,7 +32,7 @@ const CartReducer = (state = initialState, action) => {
       if (index === -1) {
         const product = {
           product: action.product,
-          qty: 1,
+          qty: parseInt(action.qty),
         };
         const updateCart = [...state.cart, product];
         return {
@@ -43,18 +47,18 @@ const CartReducer = (state = initialState, action) => {
           if (action.update) item.qty = action.qty;
           else if (
             parseInt(item.qty) + parseInt(action.qty) <=
-            item.product.stock
+            parseInt(item.product.stock)
           ) {
-            item.qty++;
+            item.qty = parseInt(item.qty) + parseInt(action.qty);
             showAlert(
-              `😎 El productooooo ya estaba en el carrito. La cantidad del mismo ha sido actualizada.`,
+              `😎 El producto ya estaba en el carrito. La cantidad del mismo ha sido actualizada.`,
               "",
               "info"
             );
           } else {
             showAlert(
               `😱 El stock disponible es ${
-                item.product.stock - parseInt(item.qty)
+                parseInt(item.product.stock) - parseInt(item.qty)
               }. Ingresá una cantidad menor.`,
               "",
               "error"

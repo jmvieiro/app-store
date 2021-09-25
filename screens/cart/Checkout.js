@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { ButtonComponent } from "../../components/ButtonComponent";
@@ -19,14 +19,7 @@ export const Checkout = ({ navigation }) => {
   const total = useSelector((state) => state.cart.total);
   const cartSize = useSelector((state) => state.cart.cartSize);
   const status = useSelector((state) => state.cart.status);
-  const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
-  });
 
   const handleModalOpen = () => {
     setModalVisible(true);
@@ -38,11 +31,11 @@ export const Checkout = ({ navigation }) => {
 
   return (
     <Screen>
-      {loading ? (
+      {status === "loading" ? (
         <Loader />
       ) : (
         <Container>
-          <View style={{ flexDirection: "row", paddingBottom: 25 }}>
+          <View style={{ alignSelf: "flex-end", paddingBottom: 10 }}>
             {cartSize > 0 && (
               <ButtonComponent
                 title="Vaciar carrito"
@@ -67,15 +60,15 @@ export const Checkout = ({ navigation }) => {
                   flexDirection: "row",
                 }}
               >
-                <View style={{ flex: 1, alignSelf: "flex-start" }}>
-                  <TextComponent style={{ fontSize: 18 }}>
+                <View style={{ flex: 1 }}>
+                  <TextComponent style={{ fontSize: 20 }}>
                     Ítems: {cartSize}
                   </TextComponent>
-                  <TextComponent style={{ fontSize: 18 }}>
+                  <TextComponent style={{ fontSize: 20 }}>
                     Total: {accounting.formatMoney(total, "$")}
                   </TextComponent>
                 </View>
-                <View style={{ paddingTop: 10, alignSelf: "flex-end" }}>
+                <View style={{ alignSelf: "flex-end" }}>
                   <ButtonComponent
                     title="Confirmar carrito"
                     handleClick={handleModalOpen}
@@ -102,32 +95,6 @@ export const Checkout = ({ navigation }) => {
           )}
         </Container>
       )}
-
-      {/* <View>
-        <TextComponent>Cart en Redux</TextComponent>
-        <FlatList
-          data={cart}
-          keyExtractor={(item) => item.product.id}
-          renderItem={(data) => {
-            return <CartItem item={data.item.product} />;
-          }}
-        />
-      </View>
-      <View>
-        {status === "loading" ? (
-          <ActivityIndicator color={COLORS.header} size="large" />
-        ) : (
-          <>
-            <TextComponent>{total}</TextComponent>
-            <ButtonComponent
-              title={`Confirmar`}
-              handleClick={() => {
-                dispatch(confirmCart_(cart));
-              }}
-            />
-          </>
-        )}
-      </View> */}
     </Screen>
   );
 };

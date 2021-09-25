@@ -1,52 +1,35 @@
 import { Modal, ScrollView, StyleSheet, View } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { ButtonComponent } from "./ButtonComponent";
 import COLORS from "../constants/colors";
-import { CartContext } from "../context/CartContext";
 import { Container } from "./Container";
 import { Input } from "./Input";
 import { Screen } from "../screens/Screen";
 import { TextComponent } from "./TextComponent";
 import accounting from "accounting";
+import { confirmCart_ } from "../store/actions/cart.actions";
 import { showAlert } from "../utils/helper";
 
 export const ModalForm = ({ modalVisible, handleModalClose }) => {
-  const { createOrder, cartTotal, cartSize } = useContext(CartContext);
-  const [form, setForm] = useState({ email: "", name: "", phone: "" });
+  const cart = useSelector((state) => state.cart.cart);
+  const total = useSelector((state) => state.cart.total);
+  const cartSize = useSelector((state) => state.cart.cartSize);
+  const email = useSelector((state) => state.auth.email);
+
+  const dispatch = useDispatch();
+  const [form, setForm] = useState({ email: email, name: "", phone: "" });
   const confirmarCarrito = () => {
     if (!form.name) {
-      showAlert(
-        "Ingresá tu nombre para completar el checkout.",
-        "",
-        "error"
-      );
-      return;
-    }
-    if (!form.email.includes("@")) {
-      showAlert(
-        "Ingresá un email válido para completar el checkout.",
-        "",
-        "error"
-      );
+      showAlert("Ingresá tu nombre para completar el checkout.", "", "error");
       return;
     }
     if (!form.phone) {
-      showAlert(
-        "Ingresá un teléfono para completar el checkout.",
-        "",
-        "error"
-      );
+      showAlert("Ingresá un teléfono para completar el checkout.", "", "error");
       return;
     }
-  
-    dispatch(confirmCart_(cart, form.email, form.name, form.phone))
-    const waitForData = async () => {
-      const res = await createOrder(form.email, form.name, form.phone);
-      if (res.res !== "success")
-        showAlert(res.desc[0], res.desc[1], res.desc[2]);
-    };
-    //waitForData();
+    dispatch(confirmCart_(cart, form.email, form.name, form.phone));
   };
   return (
     <Modal animationType="slide" visible={modalVisible} transparent>
@@ -60,7 +43,7 @@ export const ModalForm = ({ modalVisible, handleModalClose }) => {
                   Ítems: {cartSize}
                 </TextComponent>
                 <TextComponent style={styles.modalMessage}>
-                  Total: {accounting.formatMoney(cartTotal, "$")}
+                  Total: {accounting.formatMoney(total, "$")}
                 </TextComponent>
               </View>
               <TextComponent style={styles.modalMessage}>
@@ -68,18 +51,16 @@ export const ModalForm = ({ modalVisible, handleModalClose }) => {
               </TextComponent>
               <View style={{ marginVertical: 40 }}>
                 <Input
+                  value={form.email}
+                  style={styles.input}
+                  editable={false}
+                />
+                <Input
                   placeholder={"Nombre"}
                   blurOnSubmit
                   maxLength={30}
                   style={styles.input}
                   onChangeText={(e) => setForm({ ...form, name: e })}
-                />
-                <Input
-                  placeholder={"nombre@ejemplo.com"}
-                  blurOnSubmit
-                  maxLength={30}
-                  style={styles.input}
-                  onChangeText={(e) => setForm({ ...form, email: e })}
                 />
                 <Input
                   placeholder={"1122334455"}

@@ -1,5 +1,6 @@
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 
+import COLORS from "../constants/colors";
 import React from "react";
 
 export const Loader = (props) => {
@@ -14,5 +15,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-around",
+    backgroundColor: COLORS.background,
   },
 });

@@ -1,5 +1,6 @@
 import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import COLORS from "../../constants/colors";
 import { CarouselComponent } from "../../components/CarouselComponent";
@@ -7,17 +8,18 @@ import { Category } from "../../components/Category";
 import { Container } from "../../components/Container";
 import { Loader } from "../../components/Loader";
 import { TextComponent } from "../../components/TextComponent";
-import { useSelector } from "react-redux";
+import { _getCategories } from "../../store/actions/category.actions";
+import { _getProducts } from "../../store/actions/product.actions";
 
 export const Home = ({ navigation }) => {
+  const list = useSelector((state) => state.products.list);
   const categories = useSelector((state) => state.categories.list);
-  const [loading, setLoading] = useState(true);
-  const [_categories, setCategories] = useState(true);
+  const status = useSelector((state) => state.categories.status);
+  const dispatch = useDispatch();
   useEffect(() => {
-    setLoading(true);
     const waitForData = async () => {
-      setCategories(categories);
-      setLoading(false);
+      dispatch(_getCategories());
+      dispatch(_getProducts());
     };
     waitForData();
   }, []);
@@ -42,7 +44,7 @@ export const Home = ({ navigation }) => {
   ];
   return (
     <>
-      {loading ? (
+      {status === "loading" ? (
         <Loader />
       ) : (
         <>
@@ -70,7 +72,7 @@ export const Home = ({ navigation }) => {
               </View>
 
               <FlatList
-                data={_categories}
+                data={categories}
                 renderItem={(data) => {
                   return <Category navigation={navigation} item={data.item} />;
                 }}

@@ -24,41 +24,39 @@ const categoriesDB = firebase
   .collection("categories");
 const ordersDB = firebase.firestore(firebaseConfig).collection("orders");
 
-export const getCategories = () => {
-  return categoriesDB
-    .get()
-    .then((response) => {
-      return response.docs.map((doc) => {
-        return { id: doc.id, ...doc.data() };
-      });
-    })
-    .catch((res) => {
-      showAlert(
-        `😱 Ha ocurrido un error al obtener las categorías:`,
-        res,
-        "error"
-      );
-      return [];
+export const getCategories = async () => {
+  try {
+    const response = await categoriesDB
+      .get();
+    return response.docs.map((doc) => {
+      return { id: doc.id, ...doc.data() };
     });
+  } catch (res) {
+    showAlert(
+      `😱 Ha ocurrido un error al obtener las categorías:`,
+      res,
+      "error"
+    );
+    return [];
+  }
 };
 
-export const getProducts = () => {
-  return productsDB
-    .where("stock", ">", 0)
-    .get()
-    .then((response) => {
-      return response.docs.map((doc) => {
-        return { id: doc.id, ...doc.data() };
-      });
-    })
-    .catch((res) => {
-      showAlert(
-        `😱 Ha ocurrido un error al obtener los productos:`,
-        res,
-        "error"
-      );
-      return [];
+export const getProducts = async () => {
+  try {
+    const response = await productsDB
+      .where("stock", ">", 0)
+      .get();
+    return response.docs.map((doc) => {
+      return { id: doc.id, ...doc.data() };
     });
+  } catch (res) {
+    showAlert(
+      `😱 Ha ocurrido un error al obtener los productos:`,
+      res,
+      "error"
+    );
+    return [];
+  }
 };
 
 // productsDB.where("stock", ">", 0).onSnapshot((querySnapshot) => {
@@ -75,60 +73,59 @@ export const getProducts = () => {
 //   });
 // });
 
-export const getProductById = (id) => {
-  return productsDB
-    .doc(id)
-    .get()
-    .then((response) => {
-      if (!response.exists) return null;
-      return { id: response.id, ...response.data() };
-    })
-    .catch((res) => {
-      showAlert(
-        `😱 Ha ocurrido un error al obtener el producto por id:`,
-        res,
-        "error"
-      );
-      return {};
-    });
+export const getProductById = async (id) => {
+  try {
+    const response = await productsDB
+      .doc(id)
+      .get();
+    if (!response.exists)
+      return null;
+    return { id: response.id, ...response.data() };
+  } catch (res) {
+    showAlert(
+      `😱 Ha ocurrido un error al obtener el producto por id:`,
+      res,
+      "error"
+    );
+    return {};
+  }
 };
 
-export const getProductsByCategory = (id) => {
-  return productsDB
-    .where("category", "==", id)
-    .where("stock", ">", 0)
-    .get()
-    .then((response) => {
-      return response.docs.map((doc) => {
-        return { id: doc.id, ...doc.data() };
-      });
-    })
-    .catch((res) => {
-      showAlert(
-        `😱 Ha ocurrido un error al obtener los productos por categoría:`,
-        res,
-        "error"
-      );
-      return [];
+export const getProductsByCategory = async (id) => {
+  try {
+    const response = await productsDB
+      .where("category", "==", id)
+      .where("stock", ">", 0)
+      .get();
+    return response.docs.map((doc) => {
+      return { id: doc.id, ...doc.data() };
     });
+  } catch (res) {
+    showAlert(
+      `😱 Ha ocurrido un error al obtener los productos por categoría:`,
+      res,
+      "error"
+    );
+    return [];
+  }
 };
 
-export const getCategoryById = (id) => {
-  return categoriesDB
-    .doc(id)
-    .get()
-    .then((response) => {
-      if (!response.exists) return null;
-      return { id: response.id, ...response.data() };
-    })
-    .catch((res) => {
-      showAlert(
-        `😱 Ha ocurrido un error al obtener la categoría por id:`,
-        res,
-        "error"
-      );
-      return {};
-    });
+export const getCategoryById = async (id) => {
+  try {
+    const response = await categoriesDB
+      .doc(id)
+      .get();
+    if (!response.exists)
+      return null;
+    return { id: response.id, ...response.data() };
+  } catch (res) {
+    showAlert(
+      `😱 Ha ocurrido un error al obtener la categoría por id:`,
+      res,
+      "error"
+    );
+    return {};
+  }
 };
 
 const generateOrder = (newOrder, action) => {
@@ -218,20 +215,19 @@ export const updateStock = async (newOrder, action) => {
   }
 };
 
-export const getOrders = () => {
-  return ordersDB
-    .get()
-    .then((response) => {
-      return response.docs.map((doc) => {
-        return { id: doc.id, ...doc.data() };
-      });
-    })
-    .catch((res) => {
-      showAlert(
-        `😱 Ha ocurrido un error al obtener las órdenes:`,
-        res,
-        "error"
-      );
-      return [];
+export const getOrders = async () => {
+  try {
+    const response = await ordersDB
+      .get();
+    return response.docs.map((doc) => {
+      return { id: doc.id, ...doc.data() };
     });
+  } catch (res) {
+    showAlert(
+      `😱 Ha ocurrido un error al obtener las órdenes:`,
+      res,
+      "error"
+    );
+    return [];
+  }
 };

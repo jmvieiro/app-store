@@ -45,17 +45,16 @@ export const confirmCart_ = (cart, email, name, phone) => {
         type: CONFIRM_CART,
         status: "loading",
       });
-      const response = await fetch(`${URL_API}/carrito.json`, {
+      await fetch(`${URL_API}/carrito.json`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           ts_created: Date.now(),
-          order: { order },
+          order,
         }),
       });
-      // const result = await response.json();
       setTimeout(() => {
         dispacth({
           type: CONFIRM_CART,

@@ -1,52 +1,74 @@
 import { Image, StyleSheet, Text, View } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { ButtonComponent } from "./ButtonComponent";
 import COLORS from "../constants/colors";
-import { CartContext } from "../context/CartContext";
 import { ItemCounter } from "./ItemCounter";
 import ROUTES from "../constants/routes";
 import { TextComponent } from "./TextComponent";
 import accounting from "accounting";
 import { addProduct_ } from "../store/actions/cart.actions";
 import { selectCategory } from "../store/actions/category.actions";
-import { useDispatch } from "react-redux";
 
 export const ItemDetail = ({ product, navigation }) => {
   const dispatch = useDispatch();
-  const { cart, addItem } = useContext(CartContext);
+  const cart = useSelector((state) => state.cart.cart);
+
   const [confirm, setConfirm] = useState(false);
   function onAdd(c) {
     dispatch(addProduct_(product, c, false));
     setConfirm(true);
-    addItem(product, c, false);
   }
   let productInCart = cart.find((e) => e.product.id === product.id);
   let remainingStock = productInCart
-    ? product.stock - productInCart.qty
+    ? parseInt(product.stock) - parseInt(productInCart.qty)
     : product.stock;
   return (
     <>
-      <View style={{ flex: 0.5, flexDirection: "column" }}>
-        <TextComponent>ID #{product.id}</TextComponent>
-        <Image
-          style={{
-            flex: 1,
-            width: 290,
-            resizeMode: "contain",
-            alignSelf: "center",
-          }}
-          source={{ uri: product.img }}
-        />
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "column",
+        }}
+      >
+        <View>
+          <TextComponent
+            style={{
+              marginBottom: 10,
+            }}
+          >
+            ID #{product.id}
+          </TextComponent>
+          <View
+            style={{
+              flex: 1,
+              shadowColor: COLORS.white,
+              shadowOffset: { width: 0, height: 1 },
+              shadowRadius: 6,
+              shadowOpacity: 0.5,
+            }}
+          >
+            <Image
+              style={{
+                flex: 1,
+                width: 280,
+                resizeMode: "contain",
+              }}
+              source={{ uri: product.img }}
+            />
+          </View>
+        </View>
         {productInCart && (
           <View
             style={{
               position: "absolute",
               top: 45,
-              right: 5,
-              width: 62,
+              right: 25,
+              width: 70,
               borderRadius: 6,
               backgroundColor: COLORS.background,
+              padding: 3,
               paddingTop: 1,
               paddingBottom: 3,
             }}
@@ -57,7 +79,7 @@ export const ItemDetail = ({ product, navigation }) => {
                 alignSelf: "center",
                 paddingTop: 1,
                 fontWeight: "700",
-                fontSize: 12,
+                fontSize: 15,
               }}
             >
               en carrito
@@ -65,13 +87,13 @@ export const ItemDetail = ({ product, navigation }) => {
           </View>
         )}
       </View>
-      <View style={{ flex: 0.5 }}>
+      <View style={{ flex: 1 }}>
         <TextComponent>{product.title}</TextComponent>
         <TextComponent>
           {accounting.formatMoney(product.price, "$")} x un.
         </TextComponent>
         <TextComponent>{product.description}</TextComponent>
-        <TextComponent>
+        <TextComponent style={{ marginBottom: 20 }}>
           Stock disponible: {remainingStock}{" "}
           {remainingStock === 1 ? "unidad" : "unidades"}
         </TextComponent>
@@ -92,7 +114,7 @@ export const ItemDetail = ({ product, navigation }) => {
                 style={{ ...styles.button }}
                 title={`Checkout`}
                 handleClick={() => {
-                  navigation.navigate(ROUTES.CHECKOUT);
+                  navigation.navigate(ROUTES.CARRITO);
                 }}
               />
             </View>

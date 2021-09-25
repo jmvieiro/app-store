@@ -7,7 +7,7 @@ import { View } from "react-native";
 import accounting from "accounting";
 
 export const ListItemCheckout = React.memo(
-  ({ item }) => {  
+  ({ item }) => {
     let remainingStock = item.product.stock - item.qty;
     return (
       <View
@@ -18,16 +18,16 @@ export const ListItemCheckout = React.memo(
         <Card style={{ height: "100%" }}>
           <View
             style={{
-              padding: 15,
+              padding: 5,
               flexDirection: "column",
               width: "100%",
             }}
           >
-            <View style={{ flex: 1, marginBottom: 10 }}>
-              <TextComponent style={{ fontSize: 22 }}>
+            <View style={{ flex: 1, marginBottom: 5 }}>
+              <TextComponent style={{ fontSize: 20 }}>
                 {item.product.title}
               </TextComponent>
-              <TextComponent style={{ fontSize: 11 }}>
+              <TextComponent style={{ fontSize: 10 }}>
                 {remainingStock === 0
                   ? "Sin stock extra disponible."
                   : remainingStock === 1
@@ -40,7 +40,8 @@ export const ListItemCheckout = React.memo(
                 <Image
                   style={{
                     flex: 1,
-                    height: 90,
+                    height: 100,
+                    //width: 10,
                     resizeMode: "contain",
                   }}
                   source={{ uri: item.product.img }}
@@ -52,10 +53,10 @@ export const ListItemCheckout = React.memo(
                   initial={item.qty}
                   checkout={true}
                 />
-                <TextComponent>
+                <TextComponent style={{ fontSize: 15 }}>
                   {accounting.formatMoney(item.product.price, "$")} x un.
                 </TextComponent>
-                <TextComponent style={{ fontWeight: "600" }}>
+                <TextComponent style={{ fontSize: 15 }}>
                   {accounting.formatMoney(item.product.price * item.qty, "$")}{" "}
                   tot.
                 </TextComponent>

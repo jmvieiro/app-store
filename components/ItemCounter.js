@@ -1,12 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { addProduct_, removeProduct_ } from "../store/actions/cart.actions";
+import { useDispatch, useSelector } from "react-redux";
 
 import { ButtonComponent } from "./ButtonComponent";
 import COLORS from "../constants/colors";
-import { CartContext } from "../context/CartContext";
 import { Input } from "./Input";
-import { addProduct_ } from "../store/actions/cart.actions";
-import { useDispatch } from "react-redux";
 
 export const ItemCounter = ({
   product,
@@ -14,56 +13,34 @@ export const ItemCounter = ({
   onAdd = null,
   checkout = false,
 }) => {
-  console.log("initial", initial);
-
   const dispatch = useDispatch();
-  const [counter, setCounter] = useState(initial.toString());
-  const { cart, removeItem, addItem } = useContext(CartContext);
+  const [counter, setCounter] = useState(1);
+  const cart = useSelector((state) => state.cart.cart);
   let productInCart = cart.find((e) => e.product.id === product.id);
   let remainingStock = productInCart
-    ? product.stock - productInCart.qty
+    ? parseInt(product.stock) - parseInt(productInCart.qty)
     : product.stock;
-  const remove = () => {
-    removeItem(product.id);
-  };
+  useEffect(() => {
+    setCounter(initial.toString());
+  }, [initial]);
   const sumar = () => {
     if (checkout) {
       if (counter < product.stock) {
-        dispatch(addProduct_(product, counter + 1, true));
-        addItem(product, counter + 1, true);
-        setCounter(counter + 1);
+        dispatch(addProduct_(product, parseInt(counter) + 1, true));
+        setCounter(parseInt(counter) + 1);
       }
-    } else if (counter < remainingStock) setCounter(counter + 1);
+    } else if (counter < remainingStock) setCounter(parseInt(counter) + 1);
   };
   const restar = () => {
     if (checkout) {
       if (counter > 1) {
-        dispatch(addProduct_(product, counter - 1, true));
-        addItem(product, counter - 1, true);
-        setCounter(counter - 1);
+        dispatch(addProduct_(product, parseInt(counter) - 1, true));
+        setCounter(parseInt(counter) - 1);
       }
-    } else if (counter > 1) setCounter(counter - 1);
-  };
-
-  const manualChange = (e) => {
-    let value = parseInt(e);
-    if (checkout) {
-      if (value > 1 && value < remainingStock) {
-        dispatch(addProduct_(product, value, true));
-        addItem(product, value, true);
-        setCounter(value);
-      } else {
-        dispatch(addProduct_(product, product.stock, true));
-        addItem(product, product.stock, true);
-        setCounter(product.stock);
-      }
-    } else {
-      if (value > 1 && value < remainingStock) setCounter(value);
-      else setCounter(remainingStock);
-    }
+    } else if (counter > 1) setCounter(parseInt(counter) - 1);
   };
   return (
-    <View style={{ marginTop: 15 }}>
+    <>
       <View style={{ flexDirection: "row" }}>
         <ButtonComponent
           title="-"
@@ -71,9 +48,9 @@ export const ItemCounter = ({
           style={{ ...styles.button, ...styles.buttonRemove }}
         />
         <Input
-          onChangeText={manualChange}
           value={counter.toString()}
           blurOnSubmit
+          editable={false}
           autoCapitalization="none"
           keyboardType="numeric"
           maxLength={2}
@@ -97,7 +74,9 @@ export const ItemCounter = ({
           <ButtonComponent
             title="Eliminar"
             style={styles.buttonRemoveFromCart}
-            handleClick={remove}
+            handleClick={() => {
+              dispatch(removeProduct_(product.id));
+            }}
           />
         ) : (
           <ButtonComponent
@@ -107,15 +86,15 @@ export const ItemCounter = ({
           />
         )}
       </View>
-    </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   buttonRemoveFromCart: {
     padding: 0,
-    width: 100,
-    marginTop: 10,
+    width: 80,
+    marginTop: 5,
     backgroundColor: COLORS.secondary,
   },
   buttonAddToCart: {

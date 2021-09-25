@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 
 import AppLoading from "expo-app-loading";
-import { CartProvider } from "./context/CartContext";
 import { MainNavigator } from "./navigation/MainNavigator";
 import { Provider } from "react-redux";
 import React from "react";
@@ -19,9 +18,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <CartProvider>
-        <MainNavigator />
-      </CartProvider>
+      <MainNavigator />
     </Provider>
   );
 }

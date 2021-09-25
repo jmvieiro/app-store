@@ -1,7 +1,7 @@
 export default {
   HOME: "Home",
   PRODUCTS: "Products",
-  CHECKOUT: "Checkout",
+  CARRITO: "Carrito",
   CART: "Cart",
   DETAIL: "Detail",
   LOGIN: "Login",

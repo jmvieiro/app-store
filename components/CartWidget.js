@@ -1,21 +1,20 @@
-import React, { useContext } from "react";
 import { Text, TouchableOpacity } from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
 import COLORS from "../constants/colors";
-import { CartContext } from "../context/CartContext";
 import ROUTES from "../constants/routes";
+import React from "react";
 import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
 export const CartWidget = () => {
-  const { cartSize } = useContext(CartContext);
+  const cartSize = useSelector((state) => state.cart.cartSize);
   const navigation = useNavigation();
-
   return (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate(ROUTES.CHECKOUT);
+        navigation.navigate(ROUTES.CARRITO);
       }}
     >
       <View style={{ marginRight: 10 }}>

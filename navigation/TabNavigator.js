@@ -13,40 +13,63 @@ import { useSelector } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 
-const options = ({ route }) => ({
-  headerStyle: {
-    backgroundColor: COLORS.header,
-  },
-  headerTintColor: COLORS.primary,
-  headerTitleStyle: {
-    color: COLORS.primary,
-  },
-  tabBarShowLabel: false,
-  tabBarStyle: { ...styles.tabBar },
-  tabBarIcon: ({ focused, color, size }) => {
-    let iconName;
-    if (route.name === "Tienda") {
-      iconName = focused ? "home-sharp" : "home-outline";
-    } else if (route.name === "Carrito") {
-      iconName = focused ? "cart-sharp" : "cart-outline";
-    } else if (route.name === "Mis órdenes") {
-      iconName = focused ? "reorder-three-sharp" : "reorder-three-outline";
-    }
-    return (
-      <View style={styles.item}>
-        <Ionicons name={iconName} size={size} color={color} />
-        <Text>{route.name}</Text>
-      </View>
-    );
-  },
-  tabBarActiveTintColor: COLORS.background,
-  tabBarInactiveTintColor: "gray",
-});
-
 export const TabNavigator = () => {
   const email = useSelector((state) => state.auth.email);
+  const cartSize = useSelector((state) => state.cart.cartSize);
   return (
-    <Tab.Navigator screenOptions={options}>
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        headerStyle: {
+          backgroundColor: COLORS.header,
+        },
+        headerTintColor: COLORS.primary,
+        headerTitleStyle: {
+          color: COLORS.primary,
+        },
+        tabBarShowLabel: false,
+        tabBarStyle: { ...styles.tabBar },
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          if (route.name === "Tienda") {
+            iconName = focused ? "home-sharp" : "home-outline";
+          } else if (route.name === "Carrito") {
+            iconName = focused ? "cart-sharp" : "cart-outline";
+          } else if (route.name === "Mis órdenes") {
+            iconName = focused
+              ? "reorder-three-sharp"
+              : "reorder-three-outline";
+          }
+          return (
+            <View style={styles.item}>
+              <Ionicons name={iconName} size={size} color={color} />
+              {route.name === "Carrito" && (
+                <View
+                  style={{
+                    position: "absolute",
+                    top: 6,
+                    right: -19,
+                    width: 26,
+                  }}
+                >
+                  <Text
+                    style={{
+                      alignSelf: "flex-start",
+                      fontWeight: "800",
+                      fontSize: 14,
+                    }}
+                  >
+                    {cartSize}
+                  </Text>
+                </View>
+              )}
+              <Text>{route.name}</Text>
+            </View>
+          );
+        },
+        tabBarActiveTintColor: COLORS.background,
+        tabBarInactiveTintColor: "gray",
+      })}
+    >
       <Tab.Screen
         name="Tienda"
         component={ProductsNavigator}
@@ -96,6 +119,6 @@ const styles = StyleSheet.create({
   email: {
     color: COLORS.background,
     paddingRight: 10,
-    fontSize: 15
+    fontSize: 15,
   },
 });
