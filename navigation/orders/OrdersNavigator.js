@@ -1,4 +1,5 @@
 import COLORS from "../../constants/colors";
+import { OrderDetail } from "../../screens/orders/OrderDetail";
 import { Orders } from "../../screens/orders/Orders";
 import React from "react";
 import { StyleSheet } from "react-native";
@@ -24,12 +25,25 @@ export const OrdersNavigator = () => {
         name="Orders"
         component={Orders}
         options={{
-          headerTitle: () => (
+          headerTitle: () => <TextComponent></TextComponent>,
+          headerRight: () => (
             <TextComponent style={styles.title}>Mis órdenes</TextComponent>
           ),
         }}
       />
-     
+      <Stack.Screen
+        name="OrderDetail"
+        component={OrderDetail}
+        options={{
+          headerRight: () => (
+            <TextComponent style={styles.title}>
+              Detalle de la orden
+            </TextComponent>
+          ),
+          headerTitle: () => <TextComponent></TextComponent>,
+          headerBackTitle: "Mis órdenes",
+        }}
+      />
     </Stack.Navigator>
   );
 };

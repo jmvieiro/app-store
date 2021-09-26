@@ -1,4 +1,7 @@
 import { URL_API } from "../../constants/database";
+import { _getOrdersByUser } from "./order.actions";
+import { _updateStock } from "./product.actions";
+import { updateStock } from "../../firebase/client";
 
 export const ADD_PRODUCT = "ADD_PRODUCT";
 export const REMOVE_PRODUCT = "REMOVE_PRODUCT";
@@ -21,7 +24,7 @@ export const clearCart_ = () => ({
   type: CLEAR_CART,
 });
 
-export const confirmCart_ = (cart, email, name, phone) => {
+export const confirmCart_ = (cart, email, name, phone, action) => {
   return async (dispacth) => {
     try {
       const total = cart
@@ -39,28 +42,35 @@ export const confirmCart_ = (cart, email, name, phone) => {
         })),
         totalItems: totalItems,
         total: total,
+        ts_created: Date.now(),
       };
 
       dispacth({
         type: CONFIRM_CART,
         status: "loading",
       });
+
       await fetch(`${URL_API}/carrito.json`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          ts_created: Date.now(),
           order,
         }),
       });
-      setTimeout(() => {
-        dispacth({
-          type: CONFIRM_CART,
-          status: "success",
-        });
-      }, 3000);
+
+      await updateStock(order, action).then((response) => {
+        if (response.res === "success") {
+          dispacth(_updateStock(order.detail));
+          dispacth(_getOrdersByUser(email));
+        }
+        return response;
+      });
+      dispacth({
+        type: CONFIRM_CART,
+        status: "success",
+      });
     } catch (error) {
       console.log(error.message);
       dispacth({

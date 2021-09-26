@@ -3,7 +3,7 @@ import {
   GET_PRODUCTS,
   GET_PRODUCTS_BY_CATEGORY,
   SELECT_PRODUCT,
-  _getProducts,
+  UPDATE_STOCK,
 } from "../actions/product.actions";
 
 const initialState = {
@@ -25,6 +25,16 @@ const ProductReducer = (state = initialState, action) => {
         filtered: action.categoryId
           ? state.list.filter((p) => p.category == action.categoryId)
           : state.list,
+      };
+    case UPDATE_STOCK:
+      let _list = [...state.list];
+      _list.forEach((item) => {
+        let aux = action.products.find((i) => i.idProduct === item.id);
+        if (aux) item.stock -= parseInt(aux.qty);
+      });
+      return {
+        ...state,
+        list: _list,
       };
     case GET_PRODUCTS_BY_CATEGORY:
       return {

@@ -63,13 +63,6 @@ export const ItemCounter = ({
           handleClick={sumar}
           style={{ ...styles.button, ...styles.buttonAdd }}
         />
-      </View>
-      <View
-        style={{
-          flexDirection: "row",
-          alignSelf: "flex-end",
-        }}
-      >
         {checkout ? (
           <ButtonComponent
             title="Eliminar"
@@ -94,13 +87,13 @@ const styles = StyleSheet.create({
   buttonRemoveFromCart: {
     padding: 0,
     width: 80,
-    marginTop: 5,
+    marginLeft: 25,
     backgroundColor: COLORS.secondary,
   },
   buttonAddToCart: {
     padding: 0,
     width: 100,
-    marginTop: 10,
+    marginLeft: 25,
   },
   button: {
     padding: 0,

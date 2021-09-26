@@ -29,7 +29,7 @@ export const ModalForm = ({ modalVisible, handleModalClose }) => {
       showAlert("Ingresá un teléfono para completar el checkout.", "", "error");
       return;
     }
-    dispatch(confirmCart_(cart, form.email, form.name, form.phone));
+    dispatch(confirmCart_(cart, form.email, form.name, form.phone, null));
   };
   return (
     <Modal animationType="slide" visible={modalVisible} transparent>

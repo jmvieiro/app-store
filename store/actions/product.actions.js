@@ -4,6 +4,7 @@ export const SELECT_PRODUCT = "SELECT_PRODUCT";
 export const FILTER_PRODUCTS = "FILTER_PRODUCTS";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_PRODUCTS_BY_CATEGORY = "GET_PRODUCTS_BY_CATEGORY";
+export const UPDATE_STOCK = "UPDATE_STOCK";
 
 export const selectProduct = (product) => ({
   type: SELECT_PRODUCT,
@@ -13,6 +14,12 @@ export const selectProduct = (product) => ({
 export const filterProducts = (category) => ({
   type: FILTER_PRODUCTS,
   categoryId: category.id,
+});
+
+
+export const _updateStock = (products) => ({
+  type: UPDATE_STOCK,
+  products,
 });
 
 export const _getProducts = () => {

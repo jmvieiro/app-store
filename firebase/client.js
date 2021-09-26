@@ -26,8 +26,7 @@ const ordersDB = firebase.firestore(firebaseConfig).collection("orders");
 
 export const getCategories = async () => {
   try {
-    const response = await categoriesDB
-      .get();
+    const response = await categoriesDB.get();
     return response.docs.map((doc) => {
       return { id: doc.id, ...doc.data() };
     });
@@ -43,9 +42,7 @@ export const getCategories = async () => {
 
 export const getProducts = async () => {
   try {
-    const response = await productsDB
-      .where("stock", ">", 0)
-      .get();
+    const response = await productsDB.where("stock", ">", 0).get();
     return response.docs.map((doc) => {
       return { id: doc.id, ...doc.data() };
     });
@@ -75,11 +72,8 @@ export const getProducts = async () => {
 
 export const getProductById = async (id) => {
   try {
-    const response = await productsDB
-      .doc(id)
-      .get();
-    if (!response.exists)
-      return null;
+    const response = await productsDB.doc(id).get();
+    if (!response.exists) return null;
     return { id: response.id, ...response.data() };
   } catch (res) {
     showAlert(
@@ -112,11 +106,8 @@ export const getProductsByCategory = async (id) => {
 
 export const getCategoryById = async (id) => {
   try {
-    const response = await categoriesDB
-      .doc(id)
-      .get();
-    if (!response.exists)
-      return null;
+    const response = await categoriesDB.doc(id).get();
+    if (!response.exists) return null;
     return { id: response.id, ...response.data() };
   } catch (res) {
     showAlert(
@@ -128,13 +119,13 @@ export const getCategoryById = async (id) => {
   }
 };
 
-const generateOrder = (newOrder, action) => {
+const generateOrder = (newOrder, action = null) => {
   ordersDB
     .add(newOrder)
     .then(({ id }) => {
       showAlert(
-        `😎 La orden ha sido generada con éxito`,
-        `Guardá este código: ${id}. ❤️ Gracias por tu compra ❤️`,
+        `😎 La orden ha sido generada con éxito.`,
+        `Guardá este código: ${id}. Gracias por tu compra.`,
         "success",
         action
       );
@@ -215,19 +206,17 @@ export const updateStock = async (newOrder, action) => {
   }
 };
 
-export const getOrders = async () => {
+export const getOrdersByUser = async (email) => {
   try {
     const response = await ordersDB
+      .where("buyer.email", "==", email)
+      .orderBy("ts_created", "desc")
       .get();
     return response.docs.map((doc) => {
       return { id: doc.id, ...doc.data() };
     });
   } catch (res) {
-    showAlert(
-      `😱 Ha ocurrido un error al obtener las órdenes:`,
-      res,
-      "error"
-    );
+    showAlert(`😱 Ha ocurrido un error al obtener las órdenes:`, res, "error");
     return [];
   }
 };

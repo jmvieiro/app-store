@@ -48,14 +48,9 @@ const CartReducer = (state = initialState, action) => {
           else if (
             parseInt(item.qty) + parseInt(action.qty) <=
             parseInt(item.product.stock)
-          ) {
+          )
             item.qty = parseInt(item.qty) + parseInt(action.qty);
-            showAlert(
-              `😎 El producto ya estaba en el carrito. La cantidad del mismo ha sido actualizada.`,
-              "",
-              "info"
-            );
-          } else {
+          else {
             showAlert(
               `😱 El stock disponible es ${
                 parseInt(item.product.stock) - parseInt(item.qty)

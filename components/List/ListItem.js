@@ -1,10 +1,12 @@
+import { Image, View } from "react-native";
+
+import { AntDesign } from "@expo/vector-icons";
+import COLORS from "../../constants/colors";
 import { Card } from "../Card";
-import { Image } from "react-native";
 import ROUTES from "../../constants/routes";
 import React from "react";
 import { TextComponent } from "../TextComponent";
 import { TouchableOpacity } from "react-native";
-import { View } from "react-native";
 import accounting from "accounting";
 import { selectProduct } from "../../store/actions/product.actions";
 import { useDispatch } from "react-redux";
@@ -12,42 +14,45 @@ import { useDispatch } from "react-redux";
 export const ListItem = ({ item, navigation }) => {
   const dispatch = useDispatch();
   return (
-    <View
-      style={{
-        alignItems: "center",
-      }}
-    >
-      <Card style={{ height: "100%" }}>
-        <TouchableOpacity
-          style={{ width: "100%" }}
-          onPress={() => {
-            dispatch(selectProduct(item));
-            navigation.navigate(ROUTES.DETAIL);
+    <Card style={{ flex: 0.5 }}>
+      <TouchableOpacity
+        style={{ width: "100%" }}
+        onPress={() => {
+          dispatch(selectProduct(item));
+          navigation.navigate(ROUTES.DETAIL);
+        }}
+      >
+        <View
+          style={{
+            padding: 8,
+            flexDirection: "row",
           }}
         >
+          <Image
+            style={{
+              height: 80,
+              flex: 0.3,
+              resizeMode: "contain",
+            }}
+            source={{ uri: item.img }}
+          />
+          <View style={{ flex: 0.5 }}>
+            <TextComponent>{item.title}</TextComponent>
+            <TextComponent>
+              {accounting.formatMoney(item.price, "$")} x un.1
+            </TextComponent>
+          </View>
           <View
             style={{
-              padding: 15,
-              flexDirection: "row",
+              flex: 0.2,
+              alignItems: "flex-end",
+              alignSelf: "center",
             }}
           >
-            <Image
-              style={{
-                flex: 1,
-                height: 90,
-                resizeMode: "contain",
-              }}
-              source={{ uri: item.img }}
-            />
-            <View style={{ flex: 1 }}>
-              <TextComponent>{item.title}</TextComponent>
-              <TextComponent>
-                {accounting.formatMoney(item.price, "$")} x un.
-              </TextComponent>
-            </View>
+            <AntDesign name="right" size={18} color={COLORS.header} />
           </View>
-        </TouchableOpacity>
-      </Card>
-    </View>
+        </View>
+      </TouchableOpacity>
+    </Card>
   );
 };

@@ -33,17 +33,32 @@ export const Products = ({ navigation }) => {
       {status === "loading" ? (
         <Loader />
       ) : (
-        <Container>
-          <TextComponent style={{ marginBottom: 30 }}>
+        <Container
+          style={{
+            width: "100%",
+          }}
+        >
+          <TextComponent
+            style={{
+              marginBottom: 23,
+              fontSize: 22,
+              alignSelf: "flex-start",
+            }}
+          >
             {selectedCategory.name}
           </TextComponent>
-
           {(selectedCategory &&
             selectedCategory.id &&
             (!filteredProducts || filteredProducts.length === 0)) ||
           ((!selectedCategory || !selectedCategory.id) &&
             (!list || list.length === 0)) ? (
-            <TextComponent>No hay productos para mostrar.</TextComponent>
+            <TextComponent
+              style={{
+                alignSelf: "flex-start",
+              }}
+            >
+              No hay productos en esta categoría.
+            </TextComponent>
           ) : (
             <List
               data={

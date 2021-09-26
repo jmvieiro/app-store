@@ -1,9 +1,10 @@
 export default {
-  HOME: "Home",
-  PRODUCTS: "Products",
-  CARRITO: "Carrito",
-  CART: "Cart",
-  DETAIL: "Detail",
   LOGIN: "Login",
   REGISTER: "Register",
+  HOME: "Home",
+  PRODUCTS: "Products",
+  DETAIL: "Detail",
+  CARRITO: "Carrito",
+  CART: "Cart",
+  ORDER_DETAIL: "OrderDetail",
 };

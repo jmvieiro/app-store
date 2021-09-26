@@ -24,7 +24,8 @@ export const CheckoutNavigator = () => {
         name="Checkout"
         component={Checkout}
         options={{
-          headerTitle: () => (
+          headerTitle: () => <TextComponent></TextComponent>,
+          headerRight: () => (
             <TextComponent style={styles.title}>
               Carrito de compras
             </TextComponent>
