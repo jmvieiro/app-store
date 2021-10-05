@@ -5,7 +5,9 @@ import { CheckoutNavigator } from "./cart/CheckoutNavigator";
 import { Ionicons } from "@expo/vector-icons";
 import { LogoTitle } from "../components/LogoTitle";
 import { OrdersNavigator } from "./orders/OrdersNavigator";
+import { PlacesNavigator } from "./places/PlacesNavigator";
 import { ProductsNavigator } from "./shop/ProductsNavigator";
+import ROUTES from "../constants/routes";
 import React from "react";
 import { TextComponent } from "../components/TextComponent";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -30,19 +32,21 @@ export const TabNavigator = () => {
         tabBarStyle: { ...styles.tabBar },
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-          if (route.name === "Tienda") {
+          if (route.name === ROUTES.TIENDA) {
             iconName = focused ? "home-sharp" : "home-outline";
-          } else if (route.name === "Carrito") {
+          } else if (route.name === ROUTES.CARRITO) {
             iconName = focused ? "cart-sharp" : "cart-outline";
-          } else if (route.name === "Mis órdenes") {
+          } else if (route.name === ROUTES.MIS_ORDENES) {
             iconName = focused
               ? "reorder-three-sharp"
               : "reorder-three-outline";
+          } else if (route.name === ROUTES.DIRECCIONES) {
+            iconName = focused ? "location" : "location-outline";
           }
           return (
             <View style={styles.item}>
               <Ionicons name={iconName} size={size} color={color} />
-              {route.name === "Carrito" && (
+              {route.name === ROUTES.CARRITO && (
                 <View
                   style={{
                     position: "absolute",
@@ -71,7 +75,7 @@ export const TabNavigator = () => {
       })}
     >
       <Tab.Screen
-        name="Tienda"
+        name={ROUTES.TIENDA}
         component={ProductsNavigator}
         options={{
           headerTitle: () => <TextComponent></TextComponent>,
@@ -82,7 +86,7 @@ export const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Carrito"
+        name={ROUTES.CARRITO}
         component={CheckoutNavigator}
         options={{
           headerTitle: () => <TextComponent></TextComponent>,
@@ -93,8 +97,19 @@ export const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Mis órdenes"
+        name={ROUTES.MIS_ORDENES}
         component={OrdersNavigator}
+        options={{
+          headerTitle: () => <TextComponent></TextComponent>,
+          headerRight: () => (
+            <TextComponent style={styles.email}>{email}</TextComponent>
+          ),
+          headerLeft: () => <LogoTitle />,
+        }}
+      />
+      <Tab.Screen
+        name={ROUTES.DIRECCIONES}
+        component={PlacesNavigator}
         options={{
           headerTitle: () => <TextComponent></TextComponent>,
           headerRight: () => (

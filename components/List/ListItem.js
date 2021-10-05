@@ -19,7 +19,7 @@ export const ListItem = ({ item, navigation }) => {
         style={{ width: "100%" }}
         onPress={() => {
           dispatch(selectProduct(item));
-          navigation.navigate(ROUTES.DETAIL);
+          navigation.navigate(ROUTES.PRODUCT_DETAIL);
         }}
       >
         <View

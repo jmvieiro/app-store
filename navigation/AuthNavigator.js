@@ -1,6 +1,7 @@
 import COLORS from "../constants/colors";
 import { Login } from "../screens/user/Login";
 import { LogoTitle } from "../components/LogoTitle";
+import ROUTES from "../constants/routes";
 import React from "react";
 import { Register } from "../screens/user/Register";
 import { StyleSheet } from "react-native";
@@ -20,16 +21,16 @@ const options = {
 
 export const AuthNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={options} initialRouteName="Login">
+    <Stack.Navigator screenOptions={options} initialRouteName={ROUTES.LOGIN}>
       <Stack.Screen
-        name="Login"
+        name={ROUTES.LOGIN}
         component={Login}
         options={{
           headerTitle: () => <LogoTitle />,
         }}
       />
       <Stack.Screen
-        name="Register"
+        name={ROUTES.REGISTER}
         component={Register}
         options={{
           headerTitle: () => <LogoTitle />,

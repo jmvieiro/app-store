@@ -1,5 +1,6 @@
 import COLORS from "../../constants/colors";
-import { Checkout } from "../../screens/cart/Checkout";
+import { NewPlace } from "../../screens/places/NewPlace";
+import { PlaceList } from "../../screens/places/PlaceList";
 import ROUTES from "../../constants/routes";
 import React from "react";
 import { StyleSheet } from "react-native";
@@ -18,18 +19,27 @@ const options = {
   },
 };
 
-export const CheckoutNavigator = () => {
+export const PlacesNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={options} initialRouteName={ROUTES.CHECKOUT}>
+    <Stack.Navigator screenOptions={options} initialRouteName={ROUTES.PLACE_LIST}>
       <Stack.Screen
-        name={ROUTES.CHECKOUT}
-        component={Checkout}
+        name={ROUTES.PLACE_LIST}
+        component={PlaceList}
         options={{
+          headerTitle: () => (
+            <TextComponent style={styles.title}>Direcciones</TextComponent>
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name={ROUTES.NEW_PLACE}
+        component={NewPlace}
+        options={{
+          headerBackTitle: "Direcciones",
           headerTitle: () => <TextComponent></TextComponent>,
           headerRight: () => (
-            <TextComponent style={styles.title}>
-              Carrito de compras
-            </TextComponent>
+            <TextComponent style={styles.title}>Nueva dirección</TextComponent>
           ),
         }}
       />

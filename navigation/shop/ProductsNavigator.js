@@ -2,6 +2,7 @@ import COLORS from "../../constants/colors";
 import { Detail } from "../../screens/shop/Detail";
 import { Home } from "../../screens/shop/Home";
 import { Products } from "../../screens/shop/Products";
+import ROUTES from "../../constants/routes";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { TextComponent } from "../../components/TextComponent";
@@ -23,9 +24,9 @@ const options = {
 
 export const ProductsNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={options} initialRouteName="Home">
+    <Stack.Navigator screenOptions={options} initialRouteName={ROUTES.HOME}>
       <Stack.Screen
-        name="Home"
+        name={ROUTES.HOME}
         component={Home}
         options={{
           headerTitle: () => <TextComponent></TextComponent>,
@@ -35,7 +36,7 @@ export const ProductsNavigator = () => {
         }}
       />
       <Stack.Screen
-        name="Products"
+        name={ROUTES.PRODUCTS}
         component={Products}
         options={{
           headerTitle: () => <TextComponent></TextComponent>,
@@ -47,7 +48,7 @@ export const ProductsNavigator = () => {
         }}
       />
       <Stack.Screen
-        name="Detail"
+        name={ROUTES.PRODUCT_DETAIL}
         component={Detail}
         options={{
           headerTitle: () => <TextComponent></TextComponent>,

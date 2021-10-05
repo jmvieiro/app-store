@@ -1,6 +1,7 @@
 import COLORS from "../../constants/colors";
 import { OrderDetail } from "../../screens/orders/OrderDetail";
 import { Orders } from "../../screens/orders/Orders";
+import ROUTES from "../../constants/routes";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { TextComponent } from "../../components/TextComponent";
@@ -20,9 +21,9 @@ const options = {
 
 export const OrdersNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={options} initialRouteName="Orders">
+    <Stack.Navigator screenOptions={options} initialRouteName={ROUTES.ORDERS}>
       <Stack.Screen
-        name="Orders"
+        name={ROUTES.ORDERS}
         component={Orders}
         options={{
           headerTitle: () => <TextComponent></TextComponent>,
@@ -32,7 +33,7 @@ export const OrdersNavigator = () => {
         }}
       />
       <Stack.Screen
-        name="OrderDetail"
+        name={ROUTES.ORDER_DETAIL}
         component={OrderDetail}
         options={{
           headerRight: () => (

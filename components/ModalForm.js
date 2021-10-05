@@ -78,7 +78,7 @@ export const ModalForm = ({ modalVisible, handleModalClose }) => {
                     backgroundColor: COLORS.secondary,
                     width: 150,
                   }}
-                ></ButtonComponent>
+                />
                 <ButtonComponent
                   title="Confirmar"
                   handleClick={confirmarCarrito}
@@ -86,7 +86,7 @@ export const ModalForm = ({ modalVisible, handleModalClose }) => {
                     backgroundColor: COLORS.success,
                     width: 150,
                   }}
-                ></ButtonComponent>
+                />
               </View>
             </Container>
           </View>

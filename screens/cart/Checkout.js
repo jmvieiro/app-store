@@ -47,7 +47,7 @@ export const Checkout = ({ navigation }) => {
                   width: 120,
                   padding: 4,
                 }}
-              ></ButtonComponent>
+              />
             )}
           </View>
 
@@ -76,7 +76,7 @@ export const Checkout = ({ navigation }) => {
                       backgroundColor: COLORS.success,
                       width: 150,
                     }}
-                  ></ButtonComponent>
+                  />
                 </View>
               </View>
               <ModalForm
