@@ -1,16 +1,19 @@
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { Container } from "../../components/Container";
 import { CustomHeaderButton } from "../../components/CustomHeaderButton";
+import { FlatList } from "react-native";
+import { PlaceItem } from "../../components/PlaceItem";
 import ROUTES from "../../constants/routes";
 import { Screen } from "../Screen";
-import { StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
+import { loadPlaces } from "../../store/actions/places.actions";
 
 export const PlaceList = ({ navigation }) => {
-  const list = useSelector((state) => state.places.places);
-  console.log(list);
+  const dispatch = useDispatch();
+  const email = useSelector((state) => state.auth.email);
+  const places = useSelector((state) => state.places.places);
+  
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -25,15 +28,28 @@ export const PlaceList = ({ navigation }) => {
     });
   }, [navigation]);
 
+  useEffect(() => {
+    dispatch(loadPlaces(email));
+  }, []);
+
   return (
     <Screen>
-      <Container></Container>
+      <FlatList
+        data={places}
+        keyExtractor={(item) => item.id}
+        renderItem={(data) => (
+          <PlaceItem
+            title={data.item.title}
+            image={data.item.image}
+            address={data.item.address}
+            lat={data.item.lat}
+            lng={data.item.lng}
+            onSelect={() => {
+              //navigation.navigate("Detalle");
+            }}
+          />
+        )}
+      />
     </Screen>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
