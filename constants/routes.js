@@ -14,4 +14,6 @@ export default {
   DIRECCIONES: "Direcciones",
   NEW_PLACE: "NewPlace",
   PLACE_LIST: "PlaceList",
+  PLACE_DETAIL: "PlaceDetail",
+  MAP: "Map",
 };

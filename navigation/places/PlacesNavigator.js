@@ -1,5 +1,7 @@
 import COLORS from "../../constants/colors";
+import { Map } from "../../screens/places/Map";
 import { NewPlace } from "../../screens/places/NewPlace";
+import { PlaceDetail } from "../../screens/places/PlaceDetail";
 import { PlaceList } from "../../screens/places/PlaceList";
 import ROUTES from "../../constants/routes";
 import React from "react";
@@ -21,7 +23,10 @@ const options = {
 
 export const PlacesNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={options} initialRouteName={ROUTES.PLACE_LIST}>
+    <Stack.Navigator
+      screenOptions={options}
+      initialRouteName={ROUTES.PLACE_LIST}
+    >
       <Stack.Screen
         name={ROUTES.PLACE_LIST}
         component={PlaceList}
@@ -31,7 +36,6 @@ export const PlacesNavigator = () => {
           ),
         }}
       />
-
       <Stack.Screen
         name={ROUTES.NEW_PLACE}
         component={NewPlace}
@@ -40,6 +44,32 @@ export const PlacesNavigator = () => {
           headerTitle: () => <TextComponent></TextComponent>,
           headerRight: () => (
             <TextComponent style={styles.title}>Nueva dirección</TextComponent>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name={ROUTES.PLACE_DETAIL}
+        component={PlaceDetail}
+        options={{
+          headerBackTitle: "Direcciones",
+          headerTitle: () => <TextComponent></TextComponent>,
+          headerRight: () => (
+            <TextComponent style={styles.title}>
+              Detalle dirección
+            </TextComponent>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name={ROUTES.MAP}
+        component={Map}
+        options={{
+          headerBackTitle: "Nueva dirección",
+          headerTitle: () => <TextComponent></TextComponent>,
+          headerRight: () => (
+            <TextComponent style={styles.title}>
+              Vista del mapa
+            </TextComponent>
           ),
         }}
       />

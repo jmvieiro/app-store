@@ -6,6 +6,7 @@ import { ButtonComponent } from "../../components/ButtonComponent";
 import COLORS from "../../constants/colors";
 import { ImageSelector } from "../../components/ImageSelector";
 import { Input } from "../../components/Input";
+import { LocationSelector } from "../../components/LocationSelector";
 import ROUTES from "../../constants/routes";
 import { Screen } from "../Screen";
 import { TextComponent } from "../../components/TextComponent";
@@ -15,13 +16,13 @@ export const NewPlace = ({ navigation }) => {
   const email = useSelector((state) => state.auth.email);
 
   const [title, setTitle] = useState("");
-  const [address, setAddress] = useState("");
   const [image, setImage] = useState();
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
   const dispatch = useDispatch();
+  
   const handleSave = () => {
-    dispatch(addPlace(email, title, address, image, lat, lng));
+    dispatch(addPlace(email, title, image, lat, lng));
     navigation.navigate(ROUTES.PLACE_LIST);
   };
 
@@ -29,40 +30,39 @@ export const NewPlace = ({ navigation }) => {
     setImage(uri);
   };
 
+  const handlePickLocation = (loc) => {
+    setLat(loc.coords.latitude);
+    setLng(loc.coords.longitude);
+  };
+
   return (
     <Screen>
       <ScrollView>
-        <View style={styles.container}>
-          <View style={{ alignItems: "flex-start" }}>
-            <TextComponent>Título</TextComponent>
-            <Input
-              placeholder={"Título"}
-              blurOnSubmit
-              maxLength={30}
-              style={styles.input}
-              onChangeText={(e) => {
-                setTitle(e);
-              }}
-            />
-            <TextComponent>Dirección</TextComponent>
-            <Input
-              placeholder={"Dirección"}
-              blurOnSubmit
-              maxLength={30}
-              style={styles.input}
-              onChangeText={(e) => {
-                setAddress(e);
-              }}
-            />
-          </View>
+        <View style={{ alignItems: "flex-start", flex: 1, padding: 10 }}>
+          <TextComponent>Título</TextComponent>
+          <Input
+            placeholder={"Título"}
+            blurOnSubmit
+            maxLength={30}
+            style={styles.input}
+            onChangeText={(e) => {
+              setTitle(e);
+            }}
+          />
+        </View>
+        <View>
           <ImageSelector onImage={handlePickImage} />
+          <LocationSelector onLocation={handlePickLocation} />
+        </View>
+
+        <View style={{ alignItems: "center", padding: 10 }}>
           <ButtonComponent
             title="Grabar dirección"
             handleClick={handleSave}
             style={{
               backgroundColor: COLORS.success,
-              width: 150,
-              marginTop: 40,
+              width: "100%",
+              marginTop: 10,
             }}
           />
         </View>
@@ -72,9 +72,8 @@ export const NewPlace = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { alignItems: "center" },
   input: {
-    width: 300,
+    width: "100%",
     padding: 10,
     marginVertical: 10,
     borderRadius: 6,

@@ -41,7 +41,7 @@ export const ImageSelector = (props) => {
     <View style={styles.container}>
       <View style={styles.preview}>
         {!pickedUri ? (
-          <TextComponent>Seleccioná una imagen</TextComponent>
+          <TextComponent style={{}}>Seleccioná una imagen</TextComponent>
         ) : (
           <Image style={styles.image} source={{ uri: pickedUri }} />
         )}
@@ -51,8 +51,10 @@ export const ImageSelector = (props) => {
         handleClick={handleTakeImage}
         style={{
           backgroundColor: COLORS.primary,
-          width: 150,
-          marginTop: 10,
+          width: 90,
+          height: "100%",
+          justifyContent: "center",
+          padding: 0,
         }}
       />
     </View>
@@ -62,19 +64,22 @@ export const ImageSelector = (props) => {
 const styles = StyleSheet.create({
   container: {
     marginBottom: 10,
-    alignItems: "center",
+    paddingHorizontal: 10,
+    flex: 1,
+    flexDirection: "row",
   },
   preview: {
-    maxWidth: "100%",
     paddingHorizontal: 20,
-    height: 100,
+    borderRadius: 6,
+    height: 225,
     justifyContent: "center",
-    alignItems: "center",
     borderColor: COLORS.header,
     borderWidth: 1,
+    flex: 1,
+    alignItems: "center",
   },
   image: {
-    width: "100%",
-    height: "100%",
+    width: "90%",
+    height: "90%",
   },
 });

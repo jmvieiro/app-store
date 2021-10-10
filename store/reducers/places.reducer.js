@@ -1,13 +1,20 @@
-import { ADD_PLACE, LOAD_PLACES } from "../actions/places.actions";
+import {
+  ADD_PLACE,
+  LOAD_PLACES,
+  SELECT_PLACE,
+} from "../actions/places.actions";
 
 import Place from "../../models/Place";
 
 const initialState = {
   places: [],
+  selected: {},
 };
 
 const PlacesReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SELECT_PLACE:
+      return { ...state, selected: action.place };
     case ADD_PLACE:
       const newPlace = new Place(
         action.payload.id,

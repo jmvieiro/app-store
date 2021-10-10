@@ -1,5 +1,6 @@
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import React, { useEffect, useLayoutEffect } from "react";
+import { loadPlaces, selectPlace } from "../../store/actions/places.actions";
 import { useDispatch, useSelector } from "react-redux";
 
 import { CustomHeaderButton } from "../../components/CustomHeaderButton";
@@ -7,13 +8,12 @@ import { FlatList } from "react-native";
 import { PlaceItem } from "../../components/PlaceItem";
 import ROUTES from "../../constants/routes";
 import { Screen } from "../Screen";
-import { loadPlaces } from "../../store/actions/places.actions";
 
 export const PlaceList = ({ navigation }) => {
   const dispatch = useDispatch();
   const email = useSelector((state) => state.auth.email);
   const places = useSelector((state) => state.places.places);
-  
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -42,10 +42,9 @@ export const PlaceList = ({ navigation }) => {
             title={data.item.title}
             image={data.item.image}
             address={data.item.address}
-            lat={data.item.lat}
-            lng={data.item.lng}
             onSelect={() => {
-              //navigation.navigate("Detalle");
+              dispatch(selectPlace(data.item));
+              navigation.navigate(ROUTES.PLACE_DETAIL);
             }}
           />
         )}

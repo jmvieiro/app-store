@@ -5,7 +5,9 @@ import React from "react";
 
 export const TextComponent = (props) => {
   return (
-    <Text style={{ ...styles.text, ...props.style }}>{props.children}</Text>
+    <Text style={{ ...styles.text, ...props.style }} numberOfLines={2}>
+      {props.children}
+    </Text>
   );
 };
 

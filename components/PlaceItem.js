@@ -4,15 +4,13 @@ import COLORS from "../constants/colors";
 import React from "react";
 import { TextComponent } from "./TextComponent";
 
-export const PlaceItem = ({ title, image, address, lat, lng, onSelect }) => {
+export const PlaceItem = ({ title, image, address, onSelect }) => {
   return (
     <TouchableOpacity onPress={onSelect} style={styles.placeItem}>
       <Image style={styles.image} source={{ uri: image }} />
       <View style={styles.info}>
         <TextComponent style={styles.title}>{title}</TextComponent>
         <TextComponent style={styles.address}>{address}</TextComponent>
-        <TextComponent style={styles.address}>{lat}</TextComponent>
-        <TextComponent style={styles.address}>{lng}</TextComponent>
       </View>
     </TouchableOpacity>
   );
@@ -35,7 +33,6 @@ const styles = StyleSheet.create({
   },
   info: {
     marginLeft: 25,
-    //flex: 1,
     justifyContent: "center",
     alignItems: "flex-start",
   },

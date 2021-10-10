@@ -6,4 +6,5 @@ export default {
   success: "#1B746B",
   white: "#f7fff7",
   error: "#A51223",
+  gray: "#555555",
 };
