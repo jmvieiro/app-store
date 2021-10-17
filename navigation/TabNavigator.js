@@ -9,14 +9,13 @@ import { PlacesNavigator } from "./places/PlacesNavigator";
 import { ProductsNavigator } from "./shop/ProductsNavigator";
 import ROUTES from "../constants/routes";
 import React from "react";
-import { TextComponent } from "../components/TextComponent";
+import { UserMenu } from "../components/UserMenu";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSelector } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 
 export const TabNavigator = () => {
-  const email = useSelector((state) => state.auth.email);
   const cartSize = useSelector((state) => state.cart.cartSize);
   return (
     <Tab.Navigator
@@ -28,6 +27,9 @@ export const TabNavigator = () => {
         headerTitleStyle: {
           color: COLORS.primary,
         },
+        headerLeft: () => <LogoTitle />,
+        headerRight: () => <UserMenu />,
+        headerTitle: () => <Text></Text>,
         tabBarShowLabel: false,
         tabBarStyle: { ...styles.tabBar },
         tabBarIcon: ({ focused, color, size }) => {
@@ -74,50 +76,10 @@ export const TabNavigator = () => {
         tabBarInactiveTintColor: "gray",
       })}
     >
-      <Tab.Screen
-        name={ROUTES.TIENDA}
-        component={ProductsNavigator}
-        options={{
-          headerTitle: () => <TextComponent></TextComponent>,
-          headerRight: () => (
-            <TextComponent style={styles.email}>{email}</TextComponent>
-          ),
-          headerLeft: () => <LogoTitle />,
-        }}
-      />
-      <Tab.Screen
-        name={ROUTES.CARRITO}
-        component={CheckoutNavigator}
-        options={{
-          headerTitle: () => <TextComponent></TextComponent>,
-          headerRight: () => (
-            <TextComponent style={styles.email}>{email}</TextComponent>
-          ),
-          headerLeft: () => <LogoTitle />,
-        }}
-      />
-      <Tab.Screen
-        name={ROUTES.MIS_ORDENES}
-        component={OrdersNavigator}
-        options={{
-          headerTitle: () => <TextComponent></TextComponent>,
-          headerRight: () => (
-            <TextComponent style={styles.email}>{email}</TextComponent>
-          ),
-          headerLeft: () => <LogoTitle />,
-        }}
-      />
-      <Tab.Screen
-        name={ROUTES.DIRECCIONES}
-        component={PlacesNavigator}
-        options={{
-          headerTitle: () => <TextComponent></TextComponent>,
-          headerRight: () => (
-            <TextComponent style={styles.email}>{email}</TextComponent>
-          ),
-          headerLeft: () => <LogoTitle />,
-        }}
-      />
+      <Tab.Screen name={ROUTES.TIENDA} component={ProductsNavigator} />
+      <Tab.Screen name={ROUTES.CARRITO} component={CheckoutNavigator} />
+      <Tab.Screen name={ROUTES.MIS_ORDENES} component={OrdersNavigator} />
+      <Tab.Screen name={ROUTES.DIRECCIONES} component={PlacesNavigator} />
     </Tab.Navigator>
   );
 };
@@ -130,10 +92,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
     alignItems: "center",
-  },
-  email: {
-    color: COLORS.background,
-    paddingRight: 10,
-    fontSize: 15,
   },
 });

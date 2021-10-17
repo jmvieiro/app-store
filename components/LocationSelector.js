@@ -1,7 +1,5 @@
-import * as Location from "expo-location";
-
-import { Alert, StyleSheet, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
 
 import { ButtonComponent } from "./ButtonComponent";
 import COLORS from "../constants/colors";
@@ -10,40 +8,44 @@ import { MapPreview } from "./MapPreview";
 import ROUTES from "../constants/routes";
 import { TextComponent } from "./TextComponent";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
+import { waitForLocation } from "../utils/helper";
 
 export const LocationSelector = (props) => {
+  const map = useSelector((state) => state.map.selected);
   const navigation = useNavigation();
   const [location, setLocation] = useState();
   const [loading, setLoading] = useState(false);
 
-  const verifyPermissions = async () => {
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== "granted") {
-      Alert.alert(
-        "Permisos insuficientes",
-        "Necesita dar permisos de ubicación para usar la aplicación",
-        [{ text: "Ok" }]
-      );
-      return false;
+  const handleGetLocation = async () => {
+    setLoading(true);
+    setLocation();
+    const loc = await waitForLocation();
+    if (loc) {
+      setLoading(false);
+      setLocation({
+        lat: loc.coords.latitude,
+        lng: loc.coords.longitude,
+      });
+      props.onLocation({
+        lat: loc.coords.latitude,
+        lng: loc.coords.longitude,
+      });
     }
-    return true;
   };
 
-  const handleGetLocation = async () => {
-    const isLoacitonOk = await verifyPermissions();
-    if (!isLoacitonOk) return;
-    const waitForData = async () => {
-      setLoading(true);
-      setLocation();
-      const loc = await Location.getCurrentPositionAsync({ timeout: 5000 });
-      if (loc) {
-        setLoading(false);
-        setLocation(loc);
-        props.onLocation(loc);
-      }
-    };
-    waitForData();
-  };
+  useEffect(() => {
+    if (map.lat && map.lng) {
+      setLocation({
+        lat: map.lat,
+        lng: map.lng,
+      });
+      props.onLocation({
+        lat: map.lat,
+        lng: map.lng,
+      });
+    }
+  }, [map]);
 
   return (
     <View style={styles.container}>
@@ -55,10 +57,7 @@ export const LocationSelector = (props) => {
             <Loader />
           )
         ) : (
-          <MapPreview
-            lat={location.coords.latitude}
-            lng={location.coords.longitude}
-          />
+          <MapPreview lat={location.lat} lng={location.lng} />
         )}
       </View>
 

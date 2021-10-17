@@ -1,3 +1,6 @@
+import * as ImagePicker from "expo-image-picker";
+import * as Location from "expo-location";
+
 import { APP_NAME } from "./const";
 import { Alert } from "react-native";
 
@@ -55,4 +58,47 @@ export const toFullDate = (unix_timestamp) => {
     ":" +
     seconds.substr(-2)
   );
+};
+
+const verifyLocationPermissions = async () => {
+  const { status } = await Location.requestForegroundPermissionsAsync();
+  if (status !== "granted") {
+    Alert.alert(
+      "Permisos insuficientes",
+      "Necesita dar permisos de ubicación para usar la aplicación",
+      [{ text: "Ok" }]
+    );
+    return false;
+  }
+  return true;
+};
+
+export const waitForLocation = async () => {
+  const isLoacitonOk = await verifyLocationPermissions();
+  if (!isLoacitonOk) return;
+  return await Location.getCurrentPositionAsync({ timeout: 5000 });
+};
+
+const verifyCameraPermissions = async () => {
+  const { status } = await ImagePicker.requestCameraPermissionsAsync();
+
+  if (status !== "granted") {
+    Alert.alert(
+      "Permisos insuficientes",
+      "Necesita dar permisos de la cámara para usar la aplicación",
+      [{ text: "Ok" }]
+    );
+    return false;
+  }
+  return true;
+};
+
+export const waitForCamera = async () => {
+  const isCameraOk = await verifyCameraPermissions();
+  if (!isCameraOk) return;
+  return await ImagePicker.launchCameraAsync({
+    allowsEditing: true,
+    aspect: [16, 9],
+    quality: 0.8,
+  });
 };

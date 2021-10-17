@@ -14,13 +14,12 @@ import { addPlace } from "../../store/actions/places.actions";
 
 export const NewPlace = ({ navigation }) => {
   const email = useSelector((state) => state.auth.email);
-
   const [title, setTitle] = useState("");
   const [image, setImage] = useState();
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
   const dispatch = useDispatch();
-  
+
   const handleSave = () => {
     dispatch(addPlace(email, title, image, lat, lng));
     navigation.navigate(ROUTES.PLACE_LIST);
@@ -31,8 +30,8 @@ export const NewPlace = ({ navigation }) => {
   };
 
   const handlePickLocation = (loc) => {
-    setLat(loc.coords.latitude);
-    setLng(loc.coords.longitude);
+    setLat(loc.lat);
+    setLng(loc.lng);
   };
 
   return (
