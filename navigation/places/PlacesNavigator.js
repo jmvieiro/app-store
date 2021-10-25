@@ -5,8 +5,7 @@ import { PlaceDetail } from "../../screens/places/PlaceDetail";
 import { PlaceList } from "../../screens/places/PlaceList";
 import ROUTES from "../../constants/routes";
 import React from "react";
-import { StyleSheet } from "react-native";
-import { TextComponent } from "../../components/TextComponent";
+import { TextTitle } from "../../components/TextTitle";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
@@ -31,9 +30,7 @@ export const PlacesNavigator = () => {
         name={ROUTES.PLACE_LIST}
         component={PlaceList}
         options={{
-          headerTitle: () => (
-            <TextComponent style={styles.title}>Direcciones</TextComponent>
-          ),
+          headerTitle: () => <TextTitle>Direcciones</TextTitle>,
         }}
       />
       <Stack.Screen
@@ -41,10 +38,7 @@ export const PlacesNavigator = () => {
         component={NewPlace}
         options={{
           headerBackTitle: "Direcciones",
-          headerTitle: () => <TextComponent></TextComponent>,
-          headerRight: () => (
-            <TextComponent style={styles.title}>Nueva dirección</TextComponent>
-          ),
+          headerTitle: () => <TextTitle>Nueva</TextTitle>,
         }}
       />
       <Stack.Screen
@@ -52,36 +46,17 @@ export const PlacesNavigator = () => {
         component={PlaceDetail}
         options={{
           headerBackTitle: "Direcciones",
-          headerTitle: () => <TextComponent></TextComponent>,
-          headerRight: () => (
-            <TextComponent style={styles.title}>
-              Detalle dirección
-            </TextComponent>
-          ),
+          headerTitle: () => <TextTitle>Detalle</TextTitle>,
         }}
       />
       <Stack.Screen
         name={ROUTES.MAP}
         component={Map}
         options={{
-          headerBackTitle: "Nueva dirección",
-          headerTitle: () => <TextComponent></TextComponent>,
-          headerRight: () => (
-            <TextComponent style={styles.title}>
-              Vista del mapa
-            </TextComponent>
-          ),
+          headerBackTitle: "Nueva",
+          headerTitle: () => <TextTitle>Vista del mapa</TextTitle>,
         }}
       />
     </Stack.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  title: {
-    color: COLORS.primary,
-    fontSize: 22,
-    paddingTop: 0,
-    fontWeight: "600",
-  },
-});

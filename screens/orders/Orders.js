@@ -6,6 +6,7 @@ import { FlatList } from "react-native";
 import { Loader } from "../../components/Loader";
 import { OrderListItem } from "./OrderListItem";
 import { Screen } from "../Screen";
+import { TextComponent } from "../../components/TextComponent";
 import { _getOrdersByUser } from "../../store/actions/order.actions";
 
 export const Orders = ({ navigation }) => {
@@ -27,13 +28,25 @@ export const Orders = ({ navigation }) => {
         <Loader />
       ) : (
         <Container>
-          <FlatList
-            data={list}
-            renderItem={(data) => {
-              return <OrderListItem navigation={navigation} item={data.item} />;
-            }}
-            keyExtractor={(item) => item.id}
-          />
+          {list.length === 0 ? (
+            <TextComponent
+              style={{
+                marginTop: 50,
+              }}
+            >
+              No tenés órdenes generadas.
+            </TextComponent>
+          ) : (
+            <FlatList
+              data={list}
+              renderItem={(data) => {
+                return (
+                  <OrderListItem navigation={navigation} item={data.item} />
+                );
+              }}
+              keyExtractor={(item) => item.id}
+            />
+          )}
         </Container>
       )}
     </Screen>

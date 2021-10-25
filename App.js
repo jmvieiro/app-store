@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View } from "react-native";
-
 import AppLoading from "expo-app-loading";
 import { MainNavigator } from "./navigation/MainNavigator";
 import { Provider } from "react-redux";
 import React from "react";
+import { StyleSheet } from "react-native";
 import { init } from "./db/db";
 import store from "./store";
 import { useFonts } from "expo-font";

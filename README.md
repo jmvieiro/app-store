@@ -13,13 +13,26 @@ Este proyecto fue llevado a cabo con fines académicos, tratando de respetar las
 
 El proyecto consiste en la realización de un e-commerce, denominado JMV Store, a través del cual se podrán probar las principales funcionalidades aprendidas.
 
+Para la realización del proyecto, se instalaron las siguientes dependencias:
+
+- react-native-maps (https://docs.expo.dev/versions/latest/sdk/map-view/) para la visualización de mapas.
+- librería de íconos "expo-font" (https://docs.expo.dev/versions/latest/sdk/font/) 
+- selector de imágenes "expo-image-picker" (https://docs.expo.dev/versions/latest/sdk/imagepicker/)
+- geolocalización "expo-location" (https://docs.expo.dev/versions/latest/sdk/location/)
+- acceder a archivos del sistema "expo-file-system" (https://docs.expo.dev/versions/latest/sdk/filesystem/)
+- guardado de datos en dispositivo "expo-sqlite" (https://docs.expo.dev/versions/latest/sdk/sqlite/)
+- manejo de variables globales en toda la aplicación "redux" (https://react-redux.js.org/)
+- carrousel para mostrar novedades o avisos "react-native-snap-carousel" (https://www.npmjs.com/package/react-native-snap-carousel)
+- package de "accounting" para dar formato a los precios (https://www.npmjs.com/package/accounting).
+
 ### Screens y Components principales
 
 Se definieron 5 (cinco) grandes screens:
 
 #### - User
 
-Invocado al iniciar la aplicación, para registro de nuevos usuarios (Register) y autenticación del usuario (Login). 
+Invocado al iniciar la aplicación, para registro de nuevos usuarios (Register) y autenticación del usuario (Login).
+Se incluye screen de configuración para ver los datos del usuario logueado y permite cerrar la sesión.
 
 #### - Shop
 

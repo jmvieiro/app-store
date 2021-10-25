@@ -3,13 +3,12 @@ import { StyleSheet, Text, View } from "react-native";
 import COLORS from "../constants/colors";
 import { CheckoutNavigator } from "./cart/CheckoutNavigator";
 import { Ionicons } from "@expo/vector-icons";
-import { LogoTitle } from "../components/LogoTitle";
 import { OrdersNavigator } from "./orders/OrdersNavigator";
 import { PlacesNavigator } from "./places/PlacesNavigator";
 import { ProductsNavigator } from "./shop/ProductsNavigator";
 import ROUTES from "../constants/routes";
 import React from "react";
-import { UserMenu } from "../components/UserMenu";
+import { SettingsNavigator } from "./settings/SettingsNavigator";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSelector } from "react-redux";
 
@@ -27,9 +26,7 @@ export const TabNavigator = () => {
         headerTitleStyle: {
           color: COLORS.primary,
         },
-        headerLeft: () => <LogoTitle />,
-        headerRight: () => <UserMenu />,
-        headerTitle: () => <Text></Text>,
+        headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: { ...styles.tabBar },
         tabBarIcon: ({ focused, color, size }) => {
@@ -44,6 +41,8 @@ export const TabNavigator = () => {
               : "reorder-three-outline";
           } else if (route.name === ROUTES.DIRECCIONES) {
             iconName = focused ? "location" : "location-outline";
+          } else if (route.name === ROUTES.SETTINGS) {
+            iconName = focused ? "settings" : "settings-outline";
           }
           return (
             <View style={styles.item}>
@@ -68,7 +67,7 @@ export const TabNavigator = () => {
                   </Text>
                 </View>
               )}
-              <Text>{route.name}</Text>
+              <Text style={{ fontSize: 12 }}>{route.name}</Text>
             </View>
           );
         },
@@ -80,6 +79,7 @@ export const TabNavigator = () => {
       <Tab.Screen name={ROUTES.CARRITO} component={CheckoutNavigator} />
       <Tab.Screen name={ROUTES.MIS_ORDENES} component={OrdersNavigator} />
       <Tab.Screen name={ROUTES.DIRECCIONES} component={PlacesNavigator} />
+      <Tab.Screen name={ROUTES.SETTINGS} component={SettingsNavigator} />
     </Tab.Navigator>
   );
 };

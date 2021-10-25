@@ -16,4 +16,6 @@ export default {
   PLACE_LIST: "PlaceList",
   PLACE_DETAIL: "PlaceDetail",
   MAP: "Map",
+  SETTINGS: "Configuración",
+  LOGOUT: "Logout",
 };

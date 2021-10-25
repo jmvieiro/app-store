@@ -3,6 +3,7 @@ import * as Location from "expo-location";
 
 import { APP_NAME } from "./const";
 import { Alert } from "react-native";
+import { MAP_API } from "../constants/map";
 
 export const showAlert = (title, html, type, action = null) => {
   let header = APP_NAME;
@@ -101,4 +102,18 @@ export const waitForCamera = async () => {
     aspect: [16, 9],
     quality: 0.8,
   });
+};
+
+export const waitForAddress = async (lat, lng) => {
+  const googleAddress = await fetch(
+    `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${MAP_API}`
+  );
+  const response = await googleAddress.json();
+  let address = "Dirección no encontrada";
+  if (
+    response.status.toLowerCase() === "ok" &&
+    response.plus_code.compound_code
+  )
+    address = response.results[0].formatted_address;
+  return address;
 };

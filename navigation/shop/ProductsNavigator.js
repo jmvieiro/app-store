@@ -1,14 +1,12 @@
 import COLORS from "../../constants/colors";
 import { Detail } from "../../screens/shop/Detail";
 import { Home } from "../../screens/shop/Home";
+import { LogoTitle } from "../../components/LogoTitle";
 import { Products } from "../../screens/shop/Products";
 import ROUTES from "../../constants/routes";
 import React from "react";
-import { StyleSheet } from "react-native";
-import { TextComponent } from "../../components/TextComponent";
+import { TextTitle } from "../../components/TextTitle";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-//import { CartWidget } from "../../components/CartWidget";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,47 +27,26 @@ export const ProductsNavigator = () => {
         name={ROUTES.HOME}
         component={Home}
         options={{
-          headerTitle: () => <TextComponent></TextComponent>,
-          headerRight: () => (
-            <TextComponent style={styles.title}>Bienvenido</TextComponent>
-          ),
+          headerLeft: () => <LogoTitle />,
+          headerTitle: () => <TextTitle>Inicio</TextTitle>,
         }}
       />
       <Stack.Screen
         name={ROUTES.PRODUCTS}
         component={Products}
         options={{
-          headerTitle: () => <TextComponent></TextComponent>,
-          headerRight: () => (
-            <TextComponent style={styles.title}>Productos</TextComponent>
-          ),
+          headerTitle: () => <TextTitle>Productos</TextTitle>,
           headerBackTitle: "Inicio",
-          // headerRight: () => <CartWidget />,
         }}
       />
       <Stack.Screen
         name={ROUTES.PRODUCT_DETAIL}
         component={Detail}
         options={{
-          headerTitle: () => <TextComponent></TextComponent>,
-          headerRight: () => (
-            <TextComponent style={styles.title}>
-              Detalle del producto
-            </TextComponent>
-          ),
+          headerTitle: () => <TextTitle>Detalle</TextTitle>,
           headerBackTitle: "Productos",
-          // headerRight: () => <CartWidget />,
         }}
       />
     </Stack.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  title: {
-    color: COLORS.primary,
-    fontSize: 22,
-    paddingTop: 0,
-    fontWeight: "600",
-  },
-});

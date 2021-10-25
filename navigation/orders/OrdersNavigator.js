@@ -3,8 +3,7 @@ import { OrderDetail } from "../../screens/orders/OrderDetail";
 import { Orders } from "../../screens/orders/Orders";
 import ROUTES from "../../constants/routes";
 import React from "react";
-import { StyleSheet } from "react-native";
-import { TextComponent } from "../../components/TextComponent";
+import { TextTitle } from "../../components/TextTitle";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
@@ -26,34 +25,17 @@ export const OrdersNavigator = () => {
         name={ROUTES.ORDERS}
         component={Orders}
         options={{
-          headerTitle: () => <TextComponent></TextComponent>,
-          headerRight: () => (
-            <TextComponent style={styles.title}>Mis órdenes</TextComponent>
-          ),
+          headerTitle: () => <TextTitle>Mis órdenes</TextTitle>,
         }}
       />
       <Stack.Screen
         name={ROUTES.ORDER_DETAIL}
         component={OrderDetail}
         options={{
-          headerRight: () => (
-            <TextComponent style={styles.title}>
-              Detalle de la orden
-            </TextComponent>
-          ),
-          headerTitle: () => <TextComponent></TextComponent>,
+          headerTitle: () => <TextTitle>Orden</TextTitle>,
           headerBackTitle: "Mis órdenes",
         }}
       />
     </Stack.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  title: {
-    color: COLORS.primary,
-    fontSize: 22,
-    paddingTop: 0,
-    fontWeight: "600",
-  },
-});

@@ -1,5 +1,6 @@
 import COLORS from "../../constants/colors";
-import { Checkout } from "../../screens/cart/Checkout";
+import { Logout } from "../../screens/user/Logout";
+import { PlaceList } from "../../screens/places/PlaceList";
 import ROUTES from "../../constants/routes";
 import React from "react";
 import { TextTitle } from "../../components/TextTitle";
@@ -17,14 +18,17 @@ const options = {
   },
 };
 
-export const CheckoutNavigator = () => {
+export const SettingsNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={options} initialRouteName={ROUTES.CHECKOUT}>
+    <Stack.Navigator
+      screenOptions={options}
+      initialRouteName={ROUTES.LOGOUT}
+    >
       <Stack.Screen
-        name={ROUTES.CHECKOUT}
-        component={Checkout}
+        name={ROUTES.LOGOUT}
+        component={Logout}
         options={{
-          headerTitle: () => <TextTitle>Carrito de compras</TextTitle>,
+          headerTitle: () => <TextTitle>Configuración</TextTitle>,
         }}
       />
     </Stack.Navigator>

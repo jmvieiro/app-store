@@ -55,7 +55,7 @@ export const ItemDetail = ({ product }) => {
           <View
             style={{
               position: "absolute",
-              top: 45,
+              top: 60,
               right: 6,
               width: 70,
               borderRadius: 6,

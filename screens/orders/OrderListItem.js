@@ -6,6 +6,7 @@ import { Card } from "../../components/Card";
 import ROUTES from "../../constants/routes";
 import React from "react";
 import { TextComponent } from "../../components/TextComponent";
+import accounting from "accounting";
 import { selectOrder } from "../../store/actions/order.actions";
 import { toFullDate } from "../../utils/helper";
 import { useDispatch } from "react-redux";
@@ -30,7 +31,9 @@ export const OrderListItem = ({ item, navigation }) => {
           <View style={{ flex: 1 }}>
             <TextComponent>Fecha: {toFullDate(item.ts_created)}</TextComponent>
             <TextComponent>Orden #: {item.id}</TextComponent>
-            <TextComponent>Importe total: {item.total}</TextComponent>
+            <TextComponent>
+              Total: {accounting.formatMoney(item.total, "$")}
+            </TextComponent>
             <TextComponent>Ítems total: {item.totalItems}</TextComponent>
           </View>
           <View

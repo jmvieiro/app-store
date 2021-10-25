@@ -11,17 +11,31 @@ import ROUTES from "../../constants/routes";
 import { Screen } from "../Screen";
 import { TextComponent } from "../../components/TextComponent";
 import { addPlace } from "../../store/actions/places.actions";
+import { showAlert } from "../../utils/helper";
 
 export const NewPlace = ({ navigation }) => {
   const email = useSelector((state) => state.auth.email);
   const [title, setTitle] = useState("");
+  const [address, setAddress] = useState("");
   const [image, setImage] = useState();
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
   const dispatch = useDispatch();
 
   const handleSave = () => {
-    dispatch(addPlace(email, title, image, lat, lng));
+    if (!title) {
+      showAlert("Ingresá el título de la dirección.", "", "error");
+      return;
+    }
+    if (!image) {
+      showAlert("Ingresá la foto asociada a la dirección.", "", "error");
+      return;
+    }
+    if (lat === 0 || lng === 0) {
+      showAlert("Ingresá los datos de la ubicación.", "", "error");
+      return;
+    }
+    dispatch(addPlace(email, title, image, lat, lng, address));
     navigation.navigate(ROUTES.PLACE_LIST);
   };
 
@@ -32,6 +46,7 @@ export const NewPlace = ({ navigation }) => {
   const handlePickLocation = (loc) => {
     setLat(loc.lat);
     setLng(loc.lng);
+    setAddress(loc.address);
   };
 
   return (
@@ -54,7 +69,7 @@ export const NewPlace = ({ navigation }) => {
           <LocationSelector onLocation={handlePickLocation} />
         </View>
 
-        <View style={{ alignItems: "center", padding: 10 }}>
+        <View style={{ alignItems: "center" }}>
           <ButtonComponent
             title="Grabar dirección"
             handleClick={handleSave}

@@ -3,9 +3,9 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import COLORS from "../constants/colors";
 import React from "react";
 
-export const TextComponent = (props) => {
+export const TextTitle = (props) => {
   return (
-    <Text style={{ ...styles.text, ...props.style }} numberOfLines={12}>
+    <Text style={{ ...styles.text, ...props.style }} numberOfLines={2}>
       {props.children}
     </Text>
   );
@@ -13,9 +13,10 @@ export const TextComponent = (props) => {
 
 const styles = StyleSheet.create({
   text: {
-    color: COLORS.white,
-    fontSize: 17,
-    paddingTop: 10,
     fontFamily: "Roboto-Medium",
+    color: COLORS.primary,
+    fontSize: 20,
+    paddingTop: 0,
+    fontWeight: "600",
   },
 });

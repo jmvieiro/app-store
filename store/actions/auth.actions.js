@@ -4,6 +4,7 @@ import { showError } from "../../utils/helper";
 
 export const SIGN_UP = "signUp";
 export const SIGN_IN = "signInWithPassword";
+export const LOG_OUT = "logOut";
 
 export const authenticate = (email, password, method) => {
   return async (dispacth) => {
@@ -29,22 +30,18 @@ export const authenticate = (email, password, method) => {
       const data = await response.json();
       if (data.error) {
         showError(data.error.errors[0].message, "", "error");
-        setTimeout(() => {
-          dispacth({
-            type: method,
-            status: "error",
-          });
-        }, 2000);
-      }
-      setTimeout(() => {
         dispacth({
           type: method,
-          token: data.idToken,
-          userId: data.localId,
-          email: data.email,
-          status: "success",
+          status: "error",
         });
-      }, 2000);
+      }
+      dispacth({
+        type: method,
+        token: data.idToken,
+        userId: data.localId,
+        email: data.email,
+        status: "success",
+      });
     } catch (error) {
       console.log(error.message);
       dispacth({
@@ -54,3 +51,8 @@ export const authenticate = (email, password, method) => {
     }
   };
 };
+
+export const logOut = () => ({
+  type: LOG_OUT,
+  status: "success",
+});

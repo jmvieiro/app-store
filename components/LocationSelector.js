@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { waitForAddress, waitForLocation } from "../utils/helper";
 
 import { ButtonComponent } from "./ButtonComponent";
 import COLORS from "../constants/colors";
@@ -9,7 +10,6 @@ import ROUTES from "../constants/routes";
 import { TextComponent } from "./TextComponent";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
-import { waitForLocation } from "../utils/helper";
 
 export const LocationSelector = (props) => {
   const map = useSelector((state) => state.map.selected);
@@ -23,13 +23,19 @@ export const LocationSelector = (props) => {
     const loc = await waitForLocation();
     if (loc) {
       setLoading(false);
+      const _address = await waitForAddress(
+        loc.coords.latitude,
+        loc.coords.longitude
+      );
       setLocation({
         lat: loc.coords.latitude,
         lng: loc.coords.longitude,
+        address: _address,
       });
       props.onLocation({
         lat: loc.coords.latitude,
         lng: loc.coords.longitude,
+        address: _address,
       });
     }
   };
@@ -39,10 +45,12 @@ export const LocationSelector = (props) => {
       setLocation({
         lat: map.lat,
         lng: map.lng,
+        address: map.address,
       });
       props.onLocation({
         lat: map.lat,
         lng: map.lng,
+        address: map.address,
       });
     }
   }, [map]);
@@ -50,42 +58,47 @@ export const LocationSelector = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.preview}>
-        {!location ? (
-          !loading ? (
-            <TextComponent>Ubicación</TextComponent>
+        <View
+          style={{
+            flex: 1,
+            alignSelf: "center",
+          }}
+        >
+          {!location ? (
+            !loading ? (
+              <View
+                style={{
+                  alignItems: "center",
+                }}
+              >
+                <TextComponent>Ubicación</TextComponent>
+              </View>
+            ) : (
+              <Loader />
+            )
           ) : (
-            <Loader />
-          )
-        ) : (
-          <MapPreview lat={location.lat} lng={location.lng} />
-        )}
-      </View>
+            <MapPreview
+              lat={location.lat}
+              lng={location.lng}
+              address={location.address}
+            />
+          )}
+        </View>
 
-      <View style={{ height: "50%" }}>
-        <ButtonComponent
-          title="Obtener ubicación"
-          handleClick={handleGetLocation}
-          style={{
-            backgroundColor: COLORS.primary,
-            width: 90,
-            height: "100%",
-            justifyContent: "center",
-            padding: 0,
-          }}
-        />
-        <ButtonComponent
-          title="Elegir del mapa"
-          handleClick={() => {
-            navigation.navigate(ROUTES.MAP);
-          }}
-          style={{
-            backgroundColor: COLORS.gray,
-            width: 90,
-            height: "100%",
-            justifyContent: "center",
-            padding: 0,
-          }}
-        />
+        <View style={{ height: "50%" }}>
+          <ButtonComponent
+            title="Obtener ubicación"
+            handleClick={handleGetLocation}
+            style={{ ...styles.button, ...styles.button1 }}
+          />
+          <ButtonComponent
+            title="Elegir del mapa"
+            handleClick={() => {
+              navigation.navigate(ROUTES.MAP);
+            }}
+            style={styles.button}
+          />
+        </View>
       </View>
     </View>
   );
@@ -95,16 +108,28 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: 10,
     paddingHorizontal: 10,
-    flex: 1,
-    flexDirection: "row",
   },
   preview: {
-    paddingHorizontal: 20,
     borderRadius: 6,
     height: 225,
     justifyContent: "center",
     borderColor: COLORS.header,
     borderWidth: 1,
-    flex: 1,
+    flexDirection: "row",
+  },
+  button: {
+    borderWidth: 0,
+    borderRadius: 0,
+    borderBottomRightRadius: 6,
+    backgroundColor: COLORS.gray,
+    width: 90,
+    height: "100%",
+    justifyContent: "center",
+    padding: 0,
+  },
+  button1: {
+    borderRadius: 0,
+    borderTopRightRadius: 6,
+    backgroundColor: COLORS.primary,
   },
 });

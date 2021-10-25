@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   errorText: {
-    color: COLORS.secondary,
+    color: COLORS.error,
     paddingLeft: 10,
     marginBottom: 10,
     fontFamily: "Roboto-Medium",

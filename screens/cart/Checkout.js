@@ -35,24 +35,29 @@ export const Checkout = ({ navigation }) => {
         <Loader />
       ) : (
         <Container>
-          <View style={{ alignSelf: "flex-end", paddingBottom: 10 }}>
-            {cartSize > 0 && (
-              <ButtonComponent
-                title="Vaciar carrito"
-                handleClick={() => {
-                  dispatch(clearCart_());
-                }}
-                style={{
-                  backgroundColor: COLORS.secondary,
-                  width: 120,
-                  padding: 4,
-                }}
-              />
-            )}
-          </View>
-
-          {cartSize > 0 ? (
+          {cartSize === 0 ? (
+            <TextComponent
+              style={{
+                marginTop: 50,
+              }}
+            >
+              No tenés productos en el carrito.
+            </TextComponent>
+          ) : (
             <>
+              <View style={{ alignSelf: "flex-end", paddingBottom: 10 }}>
+                <ButtonComponent
+                  title="Vaciar carrito"
+                  handleClick={() => {
+                    dispatch(clearCart_());
+                  }}
+                  style={{
+                    backgroundColor: COLORS.secondary,
+                    width: 120,
+                    padding: 4,
+                  }}
+                />
+              </View>
               <List navigation={navigation} data={cart} checkout={true} />
               <View
                 style={{
@@ -84,14 +89,6 @@ export const Checkout = ({ navigation }) => {
                 modalVisible={modalVisible}
               />
             </>
-          ) : (
-            <TextComponent
-              style={{
-                marginTop: 50,
-              }}
-            >
-              No tenés productos en el carrito.
-            </TextComponent>
           )}
         </Container>
       )}

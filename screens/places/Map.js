@@ -1,25 +1,31 @@
 import MapView, { Marker } from "react-native-maps";
 import React, { useEffect, useState } from "react";
+import { waitForAddress, waitForLocation } from "../../utils/helper";
 
 import { Loader } from "../../components/Loader";
 import { selectMap } from "../../store/actions/map.actions";
 import { useDispatch } from "react-redux";
-import { waitForLocation } from "../../utils/helper";
 
 export const Map = () => {
   const [loading, setLoading] = useState(false);
+  const [address, setAddress] = useState("");
   const [selectedLocation, setSelectedLocation] = useState();
   const dispatch = useDispatch();
 
-  const handleSelectLocation = (event) => {
+  const handleSelectLocation = async (event) => {
+    const lat = event.nativeEvent.coordinate.latitude;
+    const lng = event.nativeEvent.coordinate.longitude;
     setSelectedLocation({
-      lat: event.nativeEvent.coordinate.latitude,
-      lng: event.nativeEvent.coordinate.longitude,
+      lat: lat,
+      lng: lng,
     });
+    const _address = await waitForAddress(lat, lng);
+    setAddress(_address);
     dispatch(
       selectMap({
-        lat: event.nativeEvent.coordinate.latitude,
-        lng: event.nativeEvent.coordinate.longitude,
+        lat: lat,
+        lng: lng,
+        address: _address,
       })
     );
   };
@@ -61,11 +67,8 @@ export const Map = () => {
           onPress={handleSelectLocation}
           style={{ flex: 1 }}
         >
-          {markerCoordinates && (
-            <Marker
-              title="Ubicación seleccionada"
-              coordinate={markerCoordinates}
-            />
+          {markerCoordinates && address != "" && (
+            <Marker title={address} coordinate={markerCoordinates} />
           )}
         </MapView>
       )}

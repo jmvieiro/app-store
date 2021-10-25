@@ -19,28 +19,20 @@ export const Login = ({}) => {
     formIsValid: false,
   });
   const handleSignIn = () => {
-    dispatch(
-      authenticate(
-        "jmvieiro@gmail.com",
-        "javier",
-        "signInWithPassword"
-      )
-    );
-
-    // if (formState.formIsValid)
-    //   dispatch(
-    //     authenticate(
-    //       formState.inputValues.email,
-    //       formState.inputValues.password,
-    //       "signInWithPassword"
-    //     )
-    //   );
-    // else
-    //   Alert.alert(
-    //     "Formulario inválido",
-    //     "Usuario y/o contraseñas incorrectos.",
-    //     [{ text: "Ok" }]
-    //   );
+    if (formState.formIsValid)
+      dispatch(
+        authenticate(
+          formState.inputValues.email,
+          formState.inputValues.password,
+          "signInWithPassword"
+        )
+      );
+    else
+      Alert.alert(
+        "Formulario inválido",
+        "Usuario y/o contraseñas incorrectos.",
+        [{ text: "Ok" }]
+      );
   };
 
   const onInputChangeHandler = useCallback(

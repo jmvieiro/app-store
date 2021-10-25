@@ -18,23 +18,25 @@ export const ImageSelector = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.preview}>
-        {!pickedUri ? (
-          <TextComponent style={{}}>Seleccioná una imagen</TextComponent>
-        ) : (
-          <Image style={styles.image} source={{ uri: pickedUri }} />
-        )}
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+            alignSelf: "center",
+          }}
+        >
+          {!pickedUri ? (
+            <TextComponent style={{}}>Seleccioná una imagen</TextComponent>
+          ) : (
+            <Image style={styles.image} source={{ uri: pickedUri }} />
+          )}
+        </View>
+        <ButtonComponent
+          title="Tomar Foto"
+          handleClick={handleTakeImage}
+          style={styles.button}
+        />
       </View>
-      <ButtonComponent
-        title="Tomar Foto"
-        handleClick={handleTakeImage}
-        style={{
-          backgroundColor: COLORS.primary,
-          width: 90,
-          height: "100%",
-          justifyContent: "center",
-          padding: 0,
-        }}
-      />
     </View>
   );
 };
@@ -43,21 +45,29 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: 10,
     paddingHorizontal: 10,
-    flex: 1,
-    flexDirection: "row",
   },
   preview: {
-    paddingHorizontal: 20,
     borderRadius: 6,
     height: 225,
     justifyContent: "center",
     borderColor: COLORS.header,
     borderWidth: 1,
-    flex: 1,
     alignItems: "center",
+    flexDirection: "row",
   },
   image: {
     width: "90%",
     height: "90%",
+  },
+  button: {
+    borderWidth: 0,
+    backgroundColor: COLORS.primary,
+    width: 90,
+    borderRadius: 0,
+    borderTopRightRadius: 6,
+    borderBottomRightRadius: 6,
+    height: "100%",
+    justifyContent: "center",
+    padding: 0,
   },
 });

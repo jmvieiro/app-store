@@ -21,16 +21,18 @@ export const AuthWrapper = ({
       <Container style={styles.container}>
         <TextComponent style={styles.title}>{title}</TextComponent>
         {children}
-        <View>
-          <TextComponent style={styles.message}>{message}</TextComponent>
-          <ButtonComponent
-            style={styles.button}
-            title={buttonText}
-            handleClick={() => {
-              navigation.navigate(buttonPath);
-            }}
-          />
-        </View>
+        {buttonPath && buttonText && message && (
+          <View>
+            <TextComponent style={styles.message}>{message}</TextComponent>
+            <ButtonComponent
+              style={styles.button}
+              title={buttonText}
+              handleClick={() => {
+                navigation.navigate(buttonPath);
+              }}
+            />
+          </View>
+        )}
       </Container>
     </Screen>
   );
@@ -38,7 +40,7 @@ export const AuthWrapper = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 80,
+    marginTop: 40,
     flex: 1,
   },
   title: {

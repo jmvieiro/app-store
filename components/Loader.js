@@ -6,7 +6,7 @@ import React from "react";
 export const Loader = (props) => {
   return (
     <View style={{ ...styles.container, ...props.style }}>
-      <ActivityIndicator size="large" />
+      <ActivityIndicator size="large" color={COLORS.header} />
     </View>
   );
 };
