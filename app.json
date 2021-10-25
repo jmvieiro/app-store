@@ -29,7 +29,7 @@
       "versionCode": 1,
       "permissions": [
         "CAMERA",
-        "ACCESSE_FINE_LOCATION",
+        "ACCESS_FINE_LOCATION",
         "WRITE_EXTERNAL_STORAGE"
       ],
       "config": {
